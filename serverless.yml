@@ -1,0 +1,34 @@
+org: nathanglover
+app: whats-playing
+service: spotify-web-api
+
+provider:
+  name: aws
+  runtime: python3.8
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ssm:GetParameter
+        - ssm:PutParameter
+      Resource: "arn:aws:ssm:us-east-1:596392234341:parameter/spotify-api-*"
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+      Resource: "arn:aws:s3:::spotify-api/*"
+  memorySize: 128
+  versionFunctions: false
+
+functions:
+  currently-playing:
+    handler: handler.handler
+    events:
+      - schedule:
+          name: call-spotify-currently-playing
+          rate: rate(2 minutes)
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
