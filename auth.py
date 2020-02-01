@@ -7,11 +7,14 @@ import pytz
 import requests
 
 
+logger = logging.getLogger(__name__)
+
 client = boto3.client("ssm")
 
 
 class SpotifyAPIAuth(requests.auth.AuthBase):
     def __init__(self):
+        logger.info("Authenticating with Spotify")
         self.parameter_name = "spotify-api-access-tokens"
         self.token_url = "https://accounts.spotify.com/api/token"
         self.__set_client_secret_auth()
@@ -39,12 +42,14 @@ class SpotifyAPIAuth(requests.auth.AuthBase):
             self.__refresh_tokens()
 
     def __save_new_tokens(self, tokens) -> dict:
+        logger.info("Saving new tokens to s3.")
         value = json.dumps(tokens)
         return client.put_parameter(
             Name=self.parameter_name, Value=value, Type="SecureString", Overwrite=True,
         )
 
     def __refresh_tokens(self):
+        logger.info("Refreshing Spotify access tokens")
         refresh_token = self.tokens["refresh_token"]
         data = {
             "grant_type": "refresh_token",
