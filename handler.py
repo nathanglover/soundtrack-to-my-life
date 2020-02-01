@@ -1,10 +1,10 @@
+import config
 import datetime
 import json
 import logging
 import requests
 import boto3
 
-import config
 from auth import spotify_api_auth
 
 logger = logging.getLogger(__name__)
