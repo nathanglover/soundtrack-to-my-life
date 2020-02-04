@@ -1,0 +1,7 @@
+black
+boto3
+pylint
+pytest
+pytz
+requests
+sentry-sdk
