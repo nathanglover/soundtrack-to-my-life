@@ -37,7 +37,6 @@ class SpotifyAPIAuth(requests.auth.AuthBase):
         now = datetime.datetime.now(datetime.timezone.utc)
 
         self.tokens = tokens
-        self.__refresh_tokens()
         if now > expires_at:
             self.__refresh_tokens()
 
@@ -66,6 +65,3 @@ class SpotifyAPIAuth(requests.auth.AuthBase):
     def __call__(self, r):
         r.headers["authorization"] = f"Bearer {self.tokens['access_token']}"
         return r
-
-
-spotify_api_auth = SpotifyAPIAuth()

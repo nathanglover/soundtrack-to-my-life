@@ -24,7 +24,7 @@ functions:
     events:
       - schedule:
           name: call-spotify-currently-playing
-          rate: rate(3 minutes)
+          rate: rate(5 minutes)
 
 plugins:
   - serverless-python-requirements

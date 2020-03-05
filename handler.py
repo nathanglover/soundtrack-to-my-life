@@ -5,7 +5,7 @@ import logging
 import requests
 import boto3
 
-from auth import spotify_api_auth
+from auth import SpotifyAPIAuth
 
 logger = logging.getLogger(__name__)
 s3 = boto3.resource("s3").Bucket("spotify-api")
@@ -14,7 +14,7 @@ user_id = "125242111"
 
 def save_to_s3(data):
     """
-    Save the data to s3.
+    Save the data to s3
     """
     timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%d/%H-%M-%S")
     file_name = f"user-{user_id}/currently-playing/{timestamp}.json"
@@ -30,7 +30,7 @@ def currently_playing():
     # find currently playing
     url = "https://api.spotify.com/v1/me/player/currently-playing"
     logger.info("Requesting %s", url)
-    res = requests.get(url, auth=spotify_api_auth)
+    res = requests.get(url, auth=SpotifyAPIAuth())
     res.raise_for_status()
 
     if res.status_code == 204:  # no content, nothing currently
