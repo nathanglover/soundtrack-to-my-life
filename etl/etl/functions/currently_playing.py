@@ -1,8 +1,9 @@
 import datetime
 import json
 import logging
-import requests
 import boto3
+import pytz
+import requests
 
 from etl import config
 from etl.auth import SpotifyAPIAuth
@@ -46,7 +47,7 @@ def check_response(res, auth, try2=False):
 
 
 def log_data(data):
-    timestamp = datetime.datetime.fromtimestamp(data["timestamp"] * 0.001)
+    timestamp = datetime.datetime.fromtimestamp(data["timestamp"] * 0.001, tz=pytz.utc)
     is_playing = data["is_playing"]
     currently_playing_type = data["currently_playing_type"]
     item = data["item"]
