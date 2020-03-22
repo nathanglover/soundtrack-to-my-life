@@ -5,7 +5,7 @@ import boto3
 import pytz
 import requests
 
-from etl import config
+from etl.config import init_sentry
 from etl.auth import SpotifyAPIAuth
 
 S3 = boto3.resource("s3").Bucket("spotify-api")
@@ -67,15 +67,13 @@ def log_data(data):
             print(f"Track: {track}")
 
 
-def handler(event, context, save):
+def handler(event, context, save=True):
     """
     Request and save the currently playing tracks by the authenticated user from spotify to s3
     """
-
     auth = SpotifyAPIAuth()
     res = requests.get(CURRENTLY_PLAYING_ENDPOINT, auth=auth)
     res = check_response(res, auth)
-
     if res is None:
         return
 

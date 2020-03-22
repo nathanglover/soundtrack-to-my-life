@@ -22,3 +22,7 @@ node_modules/
 
 # Serverless directories
 .serverless
+
+# Testing
+htmlcov/
+etl/.coverage
