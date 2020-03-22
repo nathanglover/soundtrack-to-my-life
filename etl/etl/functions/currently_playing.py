@@ -18,7 +18,7 @@ def save_to_s3(data):
     """
     timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%d/%H-%M-%S")
     file_name = f"user-{USER_ID}/currently-playing/{timestamp}.json"
-    print(f"Saving data ({file_name}) to s3.")
+    print(f"Saving data ({file_name}) to S3.")
     S3.Object(key=file_name).put(Body=json.dumps(data))
 
 
@@ -45,6 +45,27 @@ def check_response(res, auth, try2=False):
     return res
 
 
+def log_data(data):
+    timestamp = datetime.datetime.fromtimestamp(data["timestamp"] * 0.001)
+    is_playing = data["is_playing"]
+    currently_playing_type = data["currently_playing_type"]
+    item = data["item"]
+    print("\nCurrently Playing\n")
+    print(f"Timestamp: {timestamp}")
+    print(f"Is Playing: {is_playing}")
+    print(f"Type: {currently_playing_type}")
+    if item and currently_playing_type == "track":
+        artist = next(iter(item.get("artists", [])), None)
+        if artist and artist.get("name", None):
+            print(f"Artist: {artist['name']}")
+        album = item.get("album", {}).get("name", None)
+        if album:
+            print(f"Album: {album}")
+        track = item.get("name", None)
+        if track:
+            print(f"Track: {track}")
+
+
 def handler(event, context, save):
     """
     Request and save the currently playing tracks by the authenticated user from spotify to s3
@@ -58,6 +79,7 @@ def handler(event, context, save):
         return
 
     data = res.json()
+    log_data(data)
     if save and data:
         save_to_s3(data)
 
