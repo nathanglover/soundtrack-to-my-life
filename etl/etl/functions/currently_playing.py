@@ -18,7 +18,7 @@ def save_to_s3(data):
     """
     timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%d/%H-%M-%S")
     file_name = f"user-{USER_ID}/currently-playing/{timestamp}.json"
-    print(f"Saving data ({file_name}) to s3")
+    print(f"Saving data ({file_name}) to s3.")
     S3.Object(key=file_name).put(Body=json.dumps(data))
 
 
@@ -27,7 +27,7 @@ def check_response(res, auth, try2=False):
     Handle common status codes and either return the response or None.
     """
 
-    if res.status_code == 403:
+    if res.status_code == 401:
         if try2:
             print("401 Unauthorized: Second try, raising.")
             res.raise_for_status()
@@ -38,7 +38,7 @@ def check_response(res, auth, try2=False):
         return check_response(res, auth, try2=True)
 
     if res.status_code == 204:  # no content, nothing currently
-        print("Nothing currently playing for user %s.", USER_ID)
+        print(f"Nothing currently playing for user {USER_ID}.")
         return None
 
     res.raise_for_status()
@@ -61,3 +61,5 @@ def handler(event, context):
     
     if data:
         save_to_s3(data)
+
+    return data
