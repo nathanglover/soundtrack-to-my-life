@@ -36,7 +36,7 @@ python cli.py --save --handler currently_playing
 
 The following commands can be used to test the etl module.
 
-### pytest
+#### pytest
 
 - From the root etl directory (`soundtrack-to-my-life\etl`) run `python -m pytest`.
   Sample Output:
@@ -53,7 +53,7 @@ etl\tests\test_config.py ..                                                     
 ======================================================= 2 passed in 1.78s =======================================================
 ```
 
-### pytest with coverage
+#### pytest with coverage
 
 - For coverage run `python -m pytest --cov=.`. Sample Output:
 
@@ -82,7 +82,7 @@ TOTAL                                  133     86    35%
 ======================================================= 2 passed in 2.65s =======================================================
 ```
 
-### pytest with coverage and html report
+#### pytest with coverage and html report
 
 - For HTML coverage report run `python -m pytest --cov=. --cov-report=term --cov-report=html`.
   - Output is the same as the above.

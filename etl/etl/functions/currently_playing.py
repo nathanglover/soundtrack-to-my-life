@@ -35,7 +35,7 @@ def check_response(res, auth, try2=False):
 
         print("401 Unauthorized: Refreshing tokens and trying again.")
         auth.refresh_tokens()
-        res = requests.get(CURRENTLY_PLAYING_ENDPOINT, auth=SpotifyAPIAuth())
+        res = requests.get(CURRENTLY_PLAYING_ENDPOINT, auth=auth)
         return check_response(res, auth, try2=True)
 
     if res.status_code == 204:  # no content, nothing currently
@@ -51,7 +51,6 @@ def log_data(data):
     is_playing = data["is_playing"]
     currently_playing_type = data["currently_playing_type"]
     item = data["item"]
-    print("\nCurrently Playing\n")
     print(f"Timestamp: {timestamp}")
     print(f"Is Playing: {is_playing}")
     print(f"Type: {currently_playing_type}")

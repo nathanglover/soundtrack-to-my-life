@@ -12,17 +12,16 @@ client = boto3.client("ssm")
 
 class SpotifyAPIAuth(requests.auth.AuthBase):
     def __init__(self):
-        print("Authenticating with Spotify")
         self.parameter_name = "spotify-api-access-tokens"
         self.token_url = "https://accounts.spotify.com/api/token"
-        self.__set_client_secret_auth()
-        self.__set_tokens()
 
-    def __set_client_secret_auth(self) -> (str, str):
+    @staticmethod
+    def __get_client_secret_auth() -> (str, str):
+        print("Getting client id and client secret")
         parameter_name = "spotify-api-client-secrets"
         response = client.get_parameter(Name=parameter_name, WithDecryption=True)
         data = json.loads(response["Parameter"]["Value"])
-        self.client_secret_auth = (data["client_id"], data["client_secret"])
+        return (data["client_id"], data["client_secret"])
 
     def __set_tokens(self) -> dict:
         response = client.get_parameter(Name=self.parameter_name, WithDecryption=True)
@@ -52,7 +51,9 @@ class SpotifyAPIAuth(requests.auth.AuthBase):
             "grant_type": "refresh_token",
             "refresh_token": refresh_token,
         }
-        res = requests.post(self.token_url, data=data, auth=self.client_secret_auth)
+        res = requests.post(
+            self.token_url, data=data, auth=self.__get_client_secret_auth()
+        )
         new_tokens = res.json()
         if "refresh_token" not in new_tokens:
             new_tokens["refresh_token"] = refresh_token
@@ -61,5 +62,7 @@ class SpotifyAPIAuth(requests.auth.AuthBase):
         self.tokens = new_tokens
 
     def __call__(self, r):
+        print("Authenticating with Spotify")
+        self.__set_tokens()
         r.headers["authorization"] = f"Bearer {self.tokens['access_token']}"
         return r

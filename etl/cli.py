@@ -31,4 +31,4 @@ def handler(handler, save):
 
 
 if __name__ == "__main__":
-    handler()
+    handler()  # pragma: no cover

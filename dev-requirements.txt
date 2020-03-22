@@ -2,5 +2,6 @@ black
 coverage
 pylint
 pytest-cov
-pytest-mock 
+pytest-mock
 pytest
+requests-mock 
