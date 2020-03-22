@@ -45,7 +45,7 @@ def check_response(res, auth, try2=False):
     return res
 
 
-def handler(event, context):
+def handler(event, context, save):
     """
     Request and save the currently playing tracks by the authenticated user from spotify to s3
     """
@@ -58,8 +58,7 @@ def handler(event, context):
         return
 
     data = res.json()
-    
-    if data:
+    if save and data:
         save_to_s3(data)
 
     return data
