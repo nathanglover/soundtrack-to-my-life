@@ -1,6 +1,6 @@
 org: nathanglover
-app: whats-playing
-service: spotify-web-api
+app: soundtrack-to-my-life
+service: etl
 
 provider:
   name: aws
@@ -20,7 +20,7 @@ provider:
 
 functions:
   currently-playing:
-    handler: handler.handler
+    handler: handlers.currently_playing
     events:
       - schedule:
           name: call-spotify-currently-playing
@@ -31,4 +31,7 @@ plugins:
 
 custom:
   pythonRequirements:
-    dockerizePip: non-linux
+    dockerFile: Dockerfile
+    dockerEnv:
+      - https_proxy
+      - http_proxy

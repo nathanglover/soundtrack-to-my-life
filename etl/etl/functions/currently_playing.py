@@ -1,11 +1,11 @@
-import config
 import datetime
 import json
 import logging
 import requests
 import boto3
 
-from auth import SpotifyAPIAuth
+from etl import config
+from etl.auth import SpotifyAPIAuth
 
 S3 = boto3.resource("s3").Bucket("spotify-api")
 USER_ID = "125242111"
@@ -45,9 +45,9 @@ def check_response(res, auth, try2=False):
     return res
 
 
-def currently_playing():
+def handler(event, context):
     """
-    Request and return the currently playing tracks by the authenticated user from spotify.
+    Request and save the currently playing tracks by the authenticated user from spotify to s3
     """
 
     auth = SpotifyAPIAuth()
@@ -57,14 +57,7 @@ def currently_playing():
     if res is None:
         return
 
-    return res.json()
-
-
-def handler(event, context):
-    data = currently_playing()
+    data = res.json()
+    
     if data:
         save_to_s3(data)
-
-
-if __name__ == "__main__":
-    handler("", "")
