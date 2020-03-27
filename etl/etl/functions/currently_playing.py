@@ -5,12 +5,11 @@ import boto3
 import pytz
 import requests
 
-from etl.config import init_sentry
+from etl.config import BUCKET_NAME, USER_ID
 from etl.auth import SpotifyAPIAuth
 
-S3 = boto3.resource("s3").Bucket("spotify-api")
-USER_ID = "125242111"
-CURRENTLY_PLAYING_ENDPOINT = "https://api.spotify.com/v1/me/player/currently-playing"
+S3 = boto3.resource("s3").Bucket(BUCKET_NAME)
+CURRENT_PLAYBACK_ENDPOINT = "https://api.spotify.com/v1/me/player"
 
 
 def save_to_s3(data):
@@ -35,7 +34,7 @@ def check_response(res, auth, try2=False):
 
         print("401 Unauthorized: Refreshing tokens and trying again.")
         auth.refresh_tokens()
-        res = requests.get(CURRENTLY_PLAYING_ENDPOINT, auth=auth)
+        res = requests.get(CURRENT_PLAYBACK_ENDPOINT, auth=auth)
         return check_response(res, auth, try2=True)
 
     if res.status_code == 204:  # no content, nothing currently
@@ -71,7 +70,7 @@ def handler(event, context, save=True):
     Request and save the currently playing tracks by the authenticated user from spotify to s3
     """
     auth = SpotifyAPIAuth()
-    res = requests.get(CURRENTLY_PLAYING_ENDPOINT, auth=auth)
+    res = requests.get(CURRENT_PLAYBACK_ENDPOINT, auth=auth)
     res = check_response(res, auth)
     if res is None:
         return
