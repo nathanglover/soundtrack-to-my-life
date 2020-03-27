@@ -26,6 +26,9 @@ def check_response(res, auth, try2=False):
     """
     Handle common status codes and either return the response or None.
     """
+    if res.status_code == 503:
+        print("503 Server Error: Service Unavailable for url {res.url}.")
+        return None
 
     if res.status_code == 401:
         if try2:
