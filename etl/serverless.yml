@@ -29,6 +29,12 @@ functions:
       - schedule:
           name: call-spotify-currently-playing
           rate: rate(3 minutes)
+  insert-timeline-documents:
+    handler: handlers.insert_timeline_documents
+    events:
+      - schedule:
+          name: call-insert-timeline-documents
+          rate: rate(60 minutes)
 
 plugins:
   - serverless-python-requirements
