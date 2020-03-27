@@ -4,7 +4,7 @@ from etl.functions import currently_playing
 
 
 def test_check_response_204(requests_mock):
-    url = currently_playing.CURRENTLY_PLAYING_ENDPOINT
+    url = currently_playing.CURRENT_PLAYBACK_ENDPOINT
     requests_mock.get(url, status_code=204)
     res1 = requests.get(url)
     res2 = currently_playing.check_response(res1, None)
@@ -12,7 +12,7 @@ def test_check_response_204(requests_mock):
 
 
 def test_check_response_200(requests_mock, currently_playing_data):
-    url = currently_playing.CURRENTLY_PLAYING_ENDPOINT
+    url = currently_playing.CURRENT_PLAYBACK_ENDPOINT
     requests_mock.get(url, json=currently_playing_data)
     res1 = requests.get(url)
     res2 = currently_playing.check_response(res1, None)
@@ -20,7 +20,7 @@ def test_check_response_200(requests_mock, currently_playing_data):
 
 
 def test_check_response_401_try2(requests_mock):
-    url = currently_playing.CURRENTLY_PLAYING_ENDPOINT
+    url = currently_playing.CURRENT_PLAYBACK_ENDPOINT
     requests_mock.get(url, status_code=401)
     res1 = requests.get(url)
     with pytest.raises(requests.HTTPError):

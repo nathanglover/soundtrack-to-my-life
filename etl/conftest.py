@@ -1,8 +1,6 @@
 import pytest
 from click.testing import CliRunner
 
-from etl.functions.currently_playing import CURRENTLY_PLAYING_ENDPOINT
-
 
 @pytest.fixture
 def currently_playing_data():
