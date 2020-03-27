@@ -9,7 +9,7 @@ import pytz
 
 from etl.config import BUCKET_NAME, USER_ID, get_mongodb_client
 
-MAX_KEYS = 500
+MAX_KEYS = 1000
 S3 = boto3.client("s3")
 
 
@@ -22,7 +22,7 @@ def get_timeline_collection() -> pymongo.collection.Collection:
     Returns the mongodb timeline collection.
     """
     client = get_mongodb_client()
-    return client.get_database("soundtrackToMyLife").get_collection("rawResponses")
+    return client.get_database("soundtrackToMyLife").get_collection("timeline")
 
 
 def get_response_data(key):
@@ -56,6 +56,18 @@ def get_context(data):
     }
 
 
+def get_device(data):
+    if not data:
+        return None
+
+    return {
+        "id": data.get("id"),
+        "name": data.get("name"),
+        "type": data.get("type"),
+        "volume_percent": data.get("volume_percent"),
+    }
+
+
 def get_artist(data):
     if not data:
         return None
@@ -71,11 +83,11 @@ def get_artist(data):
 
 def get_release_date(release_date: str, precision: str):
     if precision == "day":
-        return datetime.datetime.strptime(release_date, "%Y-%m-%d").date()
+        return datetime.datetime.strptime(release_date, "%Y-%m-%d")
     if precision == "month":
         return datetime.datetime.strptime(release_date, "%Y-%m").date()
     elif precision == "year":
-        return datetime.datetime.strptime(release_date, "%Y").date()
+        return datetime.datetime.strptime(release_date, "%Y")
 
     return None
 
@@ -121,7 +133,7 @@ def get_track(data, currently_playing_type):
     }
 
 
-# todo add user-read-playback-state to start getting podcast information
+# todo: add podcast information once spotify starts sending it in the api response
 def get_episode(data, currently_playing_type):
     if not data or currently_playing_type != "episode":
         return None
@@ -152,13 +164,16 @@ def create_document(item) -> dict:
         ),
         "progress_ms": data.get("progress_ms"),
         "type": currently_playing_type,
-        "is_playing": is_playing,
+        "is_playing": data.get("is_playing", False),
+        "shuffle_state": data.get("shuffle_state", False),
+        "repeat_state": data.get("repeat_state"),
     }
     context = data.get("context")
     if context:
         document["context"] = get_context(context)
 
     item = data.get("item")
+    document["device"] = get_device(data.get("device"))
     document["track"] = get_track(item, currently_playing_type)
     document["episode"] = get_episode(item, currently_playing_type)
     return document
@@ -211,5 +226,4 @@ def handler(event, context, save=True) -> None:
         collection.insert_many(documents, ordered=True)
         return
 
-    if documents:
-        [d for d in documents]
+    [d for d in documents]
