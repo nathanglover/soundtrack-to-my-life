@@ -13,6 +13,10 @@ provider:
       Resource: "arn:aws:ssm:us-east-1:596392234341:parameter/spotify-api-*"
     - Effect: Allow
       Action:
+        - ssm:GetParameter
+      Resource: "arn:aws:ssm:us-east-1:596392234341:parameter/soundtrack-to-my-life-secrets"
+    - Effect: Allow
+      Action:
         - s3:PutObject
       Resource: "arn:aws:s3:::spotify-api/*"
   memorySize: 128

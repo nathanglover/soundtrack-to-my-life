@@ -8,6 +8,10 @@ def currently_playing(save=False):
     handlers.currently_playing(None, None, cli=True, save=save)
 
 
+def insert_timeline_documents(save=False):
+    handlers.insert_timeline_documents(None, None, cli=True, save=save)
+
+
 @click.command()
 @click.option(
     "--handler",
