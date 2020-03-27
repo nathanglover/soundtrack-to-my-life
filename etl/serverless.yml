@@ -18,6 +18,7 @@ provider:
     - Effect: Allow
       Action:
         - s3:PutObject
+        - s3:ListObjectsV2
       Resource: "arn:aws:s3:::spotify-api/*"
   memorySize: 128
   versionFunctions: false
