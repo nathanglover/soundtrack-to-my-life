@@ -17,10 +17,15 @@ provider:
       Resource: "arn:aws:ssm:us-east-1:596392234341:parameter/soundtrack-to-my-life-secrets"
     - Effect: Allow
       Action:
+        - s3:GetObject
         - s3:PutObject
-        - s3:ListObjectsV2
       Resource: "arn:aws:s3:::spotify-api/*"
+    - Effect: Allow
+      Action:
+        - s3:ListBucket
+      Resource: "arn:aws:s3:::spotify-api"
   memorySize: 128
+  timeout: 10
   versionFunctions: false
 
 functions:
@@ -35,7 +40,10 @@ functions:
     events:
       - schedule:
           name: call-insert-timeline-documents
-          rate: rate(60 minutes)
+          rate: rate(15 minutes)
+    memorySize: 256
+    timeout: 60
+    
 
 plugins:
   - serverless-python-requirements

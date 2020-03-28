@@ -188,7 +188,7 @@ def timeline_documents_generator(contents) -> dict:
             continue
 
 
-def process_s3_response(res) -> Optional[Iterable[dict]]:
+def process_s3_response(res) -> [Iterable[dict]]:
     """
     Returns either a timeline document generator or None if there are no documents to process.
     """
@@ -196,7 +196,7 @@ def process_s3_response(res) -> Optional[Iterable[dict]]:
         contents = res["Contents"]
     except KeyError:
         print("No new documents to add.")
-        return None
+        return []
     return timeline_documents_generator(contents)
 
 
