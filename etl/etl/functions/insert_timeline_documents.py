@@ -85,7 +85,7 @@ def get_release_date(release_date: str, precision: str):
     if precision == "day":
         return datetime.datetime.strptime(release_date, "%Y-%m-%d")
     if precision == "month":
-        return datetime.datetime.strptime(release_date, "%Y-%m").date()
+        return datetime.datetime.strptime(release_date, "%Y-%m")
     elif precision == "year":
         return datetime.datetime.strptime(release_date, "%Y")
 
@@ -137,8 +137,6 @@ def get_track(data, currently_playing_type):
 def get_episode(data, currently_playing_type):
     if not data or currently_playing_type != "episode":
         return None
-
-    return None
 
 
 def create_document(item) -> dict:

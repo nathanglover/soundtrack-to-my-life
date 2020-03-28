@@ -1,0 +1,20 @@
+{
+  "device": {
+    "id": "bcb6a4444eabef41ebb271eee63a995773e9b696",
+    "is_active": true,
+    "is_private_session": false,
+    "is_restricted": false,
+    "name": "Pixel 3",
+    "type": "Smartphone",
+    "volume_percent": 100
+  },
+  "shuffle_state": false,
+  "repeat_state": "off",
+  "timestamp": 1585398322628,
+  "context": null,
+  "progress_ms": 79774,
+  "item": null,
+  "currently_playing_type": "episode",
+  "actions": { "disallows": { "resuming": true } },
+  "is_playing": true
+}

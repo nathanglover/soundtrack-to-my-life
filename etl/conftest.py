@@ -1,20 +1,19 @@
+import json
+
 import pytest
 from click.testing import CliRunner
 
 
-@pytest.fixture
-def currently_playing_data():
-    return {
-        "timestamp": 1584885689675,
-        "item": {
-            "album": {"name": "Aviscerall",},
-            "artists": [{"name": "Aviscerall",}],
-            "name": "Lullabyes",
-        },
-        "currently_playing_type": "track",
-        "is_playing": True,
-    }
 
+@pytest.fixture
+def currently_playing_episode_data():
+    with open("fixtures/s3-currently-playing-episode-obj.json") as f:
+        return json.load(f)
+
+@pytest.fixture
+def currently_playing_track_data():
+    with open("fixtures/s3-currently-playing-track-obj.json") as f:
+        return json.load(f)
 
 @pytest.fixture
 def cli_runner():
