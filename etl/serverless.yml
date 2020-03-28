@@ -28,6 +28,28 @@ provider:
   timeout: 10
   versionFunctions: false
 
+  package:
+    exclude:
+      - __pycache__/**
+      - .pytest_cache/**
+      - .serverless/**
+      - .venv/**
+      - etl/__pycache__/**
+      - etl/.pytest_cache/**
+      - etl/tests/**
+      - fixtures/**
+      - htmlcov/**
+      - node_modules/**
+      - tests/**
+      - .coverage
+      - .coveragerc
+      - cli.py
+      - conftest.py
+      - Dockerfile
+      - package.json
+      - README.md
+      - yarn.lock
+
 functions:
   currently-playing:
     handler: handlers.currently_playing
@@ -43,7 +65,6 @@ functions:
           rate: rate(15 minutes)
     memorySize: 256
     timeout: 60
-    
 
 plugins:
   - serverless-python-requirements
