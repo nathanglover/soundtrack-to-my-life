@@ -218,7 +218,7 @@ def handler(event, context, save=True) -> None:
     Save new files from s3 to the mongo db database.
     """
     collection = get_timeline_collection()
-    documents = timeline_documents(collection)
+    documents = list(timeline_documents(collection))
     if save and documents:
         print("Saving new timeline documents.")
         collection.insert_many(documents, ordered=True)
