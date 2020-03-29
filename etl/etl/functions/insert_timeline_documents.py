@@ -223,5 +223,3 @@ def handler(event, context, save=True) -> None:
         print("Saving new timeline documents.")
         collection.insert_many(documents, ordered=True)
         return
-
-    [d for d in documents]
