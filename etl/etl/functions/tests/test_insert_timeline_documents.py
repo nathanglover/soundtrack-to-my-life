@@ -5,7 +5,9 @@ import io
 import pytest
 
 import etl
+from etl.config import BUCKET_NAME
 from etl.functions.insert_timeline_documents import (
+    MAX_KEYS,
     create_document,
     get_album,
     get_artist,
@@ -16,7 +18,9 @@ from etl.functions.insert_timeline_documents import (
     get_response_data,
     get_track,
     get_urls,
+    handler,
     process_s3_response,
+    timeline_documents,
     timeline_documents_generator,
     IsPlayingException,
 )
@@ -164,3 +168,29 @@ def test_timeline_documents_generator(mocker, currently_playing_track_data):
         return_value={"is_playing": False},
     )
     assert len(list(timeline_documents_generator([item]))) == 0
+
+
+def test_timeline_documents_empty(mocker):
+    mocker.patch(
+        "etl.functions.insert_timeline_documents.collection.find_one", return_value=None
+    )
+    mocker.patch("etl.functions.insert_timeline_documents.S3.list_objects_v2"),
+    mocker.patch("etl.functions.insert_timeline_documents.process_s3_response")
+    timeline_documents()
+    etl.functions.insert_timeline_documents.S3.list_objects_v2.assert_called_once_with(
+        Bucket=BUCKET_NAME, MaxKeys=MAX_KEYS
+    )
+    etl.functions.insert_timeline_documents.process_s3_response.assert_called_once()
+
+
+def test_handler(mocker):
+    mocker.patch(
+        "etl.functions.insert_timeline_documents.timeline_documents",
+        return_value=[1, 2, 3],
+    )
+    mocker.patch("etl.functions.insert_timeline_documents.collection")
+    handler(None, None, True)
+    etl.functions.insert_timeline_documents.timeline_documents.assert_called_once()
+    etl.functions.insert_timeline_documents.collection.insert_many.assert_called_once_with(
+        [1, 2, 3], ordered=True
+    )
