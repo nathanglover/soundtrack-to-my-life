@@ -1,8 +1,8 @@
 {
-  "name": "apollo-graphql",
+  "name": "graphql",
   "version": "1.0.0",
-  "description": "netlify functions:create - set up for apollo graphql",
-  "main": "apollo-graphql.js",
+  "description": "netlify functions:create - set up for graphql",
+  "main": "graphql.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
