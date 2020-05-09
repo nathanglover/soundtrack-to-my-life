@@ -9,6 +9,7 @@ module.exports = gql`
     artist
     playlist
   }
+
   type Context {
     type: ContextType
     uri: String
@@ -101,6 +102,6 @@ module.exports = gql`
 
   # Query
   type Query {
-    timeline: [TimelineObj]
+    timeline(date: Date): [TimelineObj]
   }
 `;

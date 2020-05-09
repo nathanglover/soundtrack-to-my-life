@@ -3,8 +3,22 @@ const { Kind } = require("graphql/language");
 
 module.exports = (db) => ({
   Query: {
-    timeline: async () =>
-      await db.collection("timeline").find().limit(5).toArray(),
+    timeline: async (obj, { date }, context, info) => {
+      const previousDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() - 1
+      );
+      const timelineObjs = await db
+        .collection("timeline")
+        .find({
+          timestamp: { $lte: date, $gt: previousDate },
+          track: { $ne: null },
+        })
+        .sort({ timestamp: -1 })
+        .toArray();
+      return timelineObjs;
+    },
   },
   Date: new GraphQLScalarType({
     name: "Date",
@@ -17,7 +31,7 @@ module.exports = (db) => ({
     },
     parseLiteral(ast) {
       if (ast.kind === Kind.INT) {
-        return new Date(ast.value);
+        return new Date(+ast.value);
       }
       return null;
     },
