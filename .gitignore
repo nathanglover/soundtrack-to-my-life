@@ -43,3 +43,7 @@ yarn-debug.log*
 yarn-error.log*
 # Local Netlify folder
 .netlify
+
+# gatsby files
+.cache/
+public
