@@ -4,6 +4,12 @@
     command = "yarn build"
     functions = "./functions/"
 
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+
 [dev]
     command = "yarn --cwd app start"
     port = 8000
