@@ -1,39 +1,40 @@
 {
-  "name": "gatsby-soundtrack-to-my-life",
-  "private": true,
-  "description": "Soundtrack to My Life Gastby app",
+  "name": "app",
   "version": "0.1.0",
-  "author": "Nathan Glover <nathan.l.glover@gmail.com>",
+  "private": true,
   "dependencies": {
-    "gatsby": "^2.21.21",
-    "gatsby-image": "^2.4.3",
-    "gatsby-plugin-manifest": "^2.4.2",
-    "gatsby-plugin-offline": "^3.2.1",
-    "gatsby-plugin-react-helmet": "^3.3.1",
-    "gatsby-plugin-sharp": "^2.6.2",
-    "gatsby-source-filesystem": "^2.3.1",
-    "gatsby-transformer-sharp": "^2.5.2",
+    "@apollo/react-hooks": "^3.1.5",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "apollo-boost": "^0.4.8",
+    "graphql": "^15.0.0",
     "netlify-lambda": "^1.6.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-helmet": "^6.0.0"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1",
+    "typeface-montserrat": "^0.0.75"
   },
-  "devDependencies": {
-    "prettier": "2.0.5"
-  },
-  "keywords": [
-    "gatsby"
-  ],
-  "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
-    "postinstall": "netlify-lambda install functions"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

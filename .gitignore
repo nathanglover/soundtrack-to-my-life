@@ -46,10 +46,16 @@ yarn-error.log*
 .netlify
 app/netlify.toml
 
-# gatsby files
-.cache/
-public
-
 # secrets 
-**.env
+**.env.**
 
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
