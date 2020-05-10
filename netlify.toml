@@ -1,6 +1,6 @@
 [build]
     base = "./app/"
-    publish = "./public/"
+    publish = "./build/"
     command = "yarn build"
     functions = "./functions/"
 
