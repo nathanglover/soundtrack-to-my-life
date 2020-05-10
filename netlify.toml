@@ -3,3 +3,9 @@
     publish = "./public/"
     command = "gatsby build"
     functions = "./functions/"
+
+[dev]
+    command = "yarn --cwd app start"
+    port = 8000
+    publish = "app/public"
+    

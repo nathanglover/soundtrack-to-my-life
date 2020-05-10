@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server-lambda");
+const { gql } = require("apollo-server-lambda")
 
 module.exports = gql`
   scalar Date
@@ -104,4 +104,4 @@ module.exports = gql`
   type Query {
     timeline(date: Date): [TimelineObj]
   }
-`;
+`

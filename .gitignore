@@ -41,9 +41,15 @@ etl/.coverage
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
 # Local Netlify folder
 .netlify
+app/netlify.toml
 
 # gatsby files
 .cache/
 public
+
+# secrets 
+**.env
+
