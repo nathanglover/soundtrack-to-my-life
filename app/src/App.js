@@ -13,7 +13,7 @@ function App() {
           <Route path="/about" component={About} />
           <Route
             exact
-            path={["/date/:dateParam", "/date", "/"]}
+            path={["/:dateParam", "/"]}
             component={DatePage}
           />
           <Route component={NotFound} />
