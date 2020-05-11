@@ -15,7 +15,7 @@ module.exports = (db) => ({
           timestamp: { $lte: date, $gt: previousDate },
           track: { $ne: null },
         })
-        .sort({ timestamp: -1 })
+        .sort({ timestamp: 1 })
         .toArray();
       return timelineObjs;
     },

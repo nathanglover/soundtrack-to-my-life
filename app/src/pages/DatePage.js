@@ -14,7 +14,8 @@ function DatePage() {
       new Date(dateParam) instanceof Date &&
       !isNaN(new Date(dateParam))
     ) {
-      setDate(new Date(dateParam));
+      const x = new Date(dateParam);
+      setDate(new Date(x.getTime() + Math.abs(x.getTimezoneOffset() * 60000)));
     } else if (!dateParam) {
       setDate(new Date());
     }
