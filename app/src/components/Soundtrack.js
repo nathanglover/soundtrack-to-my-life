@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { TIMELINE_QUERY } from "../graphql";
 import SoundtrackAlbum from "./SoundtrackAlbum";
 import SoundtrackHeader from "./SoundtrackHeader";
+import SoundtrackTrack from "./SoundtrackTrack";
 
 const SoundtrackBackground = styled.div`
   background-image: linear-gradient(
@@ -52,6 +53,7 @@ function Soundtrack({ date }) {
           album={track.album}
           setAlbumColor={setAlbumColor}
         ></SoundtrackAlbum>
+        <SoundtrackTrack track={track} />
       </SoundtrackContainer>
     </SoundtrackBackground>
   );

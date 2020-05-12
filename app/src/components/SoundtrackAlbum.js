@@ -3,7 +3,7 @@ import * as Vibrant from "node-vibrant";
 import styled from "styled-components";
 
 const AlbumCover = styled.img`
-  margin: 4rem 0 4rem 0;
+  margin: 4rem 0 2rem 0;
 `;
 
 function SoundtrackAlbum({ album, setAlbumColor }) {
