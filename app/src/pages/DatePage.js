@@ -6,9 +6,8 @@ import { Soundtrack } from "../components";
 
 function DatePage() {
   const { dateParam } = useParams();
-  const [isLoading, setIsLoading] = useState(true);
   const [date, setDate] = useState(null);
-  const onMount = () => {
+  useEffect(() => {
     if (
       dateParam &&
       new Date(dateParam) instanceof Date &&
@@ -19,16 +18,10 @@ function DatePage() {
     } else if (!dateParam) {
       setDate(new Date());
     }
-    setIsLoading(false);
-  };
-  useEffect(onMount, []);
-
-  if (isLoading) {
-    return <>Loading...</>;
-  }
+  }, [dateParam]);
 
   if (!date) {
-    return <NotFound />;
+    return <></>;
   }
 
   return <Soundtrack date={date} />;
