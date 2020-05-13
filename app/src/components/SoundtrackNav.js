@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -43,6 +43,11 @@ function SoundtrackNav({ date }) {
   const [clickedForward, setClickedForward] = useState(false);
   const previousDate = new Date(date.getTime() - ONE_DAY);
   const nextDate = new Date(date.getTime() + ONE_DAY);
+
+  useEffect(() => {
+    setClickedBack(false);
+    setClickedForward(false);
+  }, [date]);
 
   if (clickedBack) {
     return <Redirect to={`/${getDateString(previousDate)}`} />;

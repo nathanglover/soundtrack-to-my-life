@@ -42,20 +42,20 @@ function Soundtrack({ date }) {
     }
   }, [data, loading]);
 
-  if (loading || !track) {
-    return <>Loading</>;
-  }
-
   return (
     <SoundtrackBackground albumColor={albumColor}>
       <SoundtrackContainer>
         <SoundtrackHeader date={date}></SoundtrackHeader>
-        <SoundtrackAlbum
-          album={track.album}
-          setAlbumColor={setAlbumColor}
-        ></SoundtrackAlbum>
-        <SoundtrackTrack track={track} />
-        <SoundtrackNav date={date} />
+        {!loading && track && (
+          <>
+            <SoundtrackAlbum
+              album={track.album}
+              setAlbumColor={setAlbumColor}
+            ></SoundtrackAlbum>
+            <SoundtrackTrack track={track} />
+            <SoundtrackNav date={date} />
+          </>
+        )}
       </SoundtrackContainer>
     </SoundtrackBackground>
   );
