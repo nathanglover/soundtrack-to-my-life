@@ -53,7 +53,7 @@ function Soundtrack({ date }) {
               setAlbumColor={setAlbumColor}
             ></SoundtrackAlbum>
             <SoundtrackTrack track={track} />
-            <SoundtrackNav date={date} />
+            <SoundtrackNav date={date} previewUrl={track.urls.preview} />
           </>
         )}
       </SoundtrackContainer>

@@ -12,6 +12,7 @@ export const TIMELINE_QUERY = gql`
         }
         urls {
           web
+          preview
         }
         album {
           name

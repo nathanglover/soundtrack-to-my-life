@@ -38,16 +38,38 @@ const getDateString = (date) => {
   );
 };
 
-function SoundtrackNav({ date }) {
+function SoundtrackNav({ date, previewUrl }) {
+  const [isPlayingPreview, setIsPlayingPreview] = useState(false);
+  const [previewAudio, setPreviewAudio] = useState(new Audio(previewUrl));
   const [clickedBack, setClickedBack] = useState(false);
   const [clickedForward, setClickedForward] = useState(false);
   const previousDate = new Date(date.getTime() - ONE_DAY);
   const nextDate = new Date(date.getTime() + ONE_DAY);
 
   useEffect(() => {
+    setIsPlayingPreview(false);
     setClickedBack(false);
     setClickedForward(false);
   }, [date]);
+
+  useEffect(() => {
+    setPreviewAudio(new Audio(previewUrl));
+  }, [previewUrl]);
+
+  const onPlayClick = () => {
+    if (previewUrl && isPlayingPreview) {
+      previewAudio.pause();
+      setIsPlayingPreview(false);
+    }
+    if (previewUrl && !isPlayingPreview) {
+      previewAudio.play();
+      setIsPlayingPreview(true);
+    }
+  };
+
+  if (clickedBack || clickedForward) {
+    previewAudio.pause();
+  }
 
   if (clickedBack) {
     return <Redirect to={`/${getDateString(previousDate)}`} />;
@@ -59,7 +81,12 @@ function SoundtrackNav({ date }) {
   return (
     <div>
       <Icon icon={faStepBackward} onClick={() => setClickedBack(true)} />
-      <Icon icon={faPlay} />
+      {!isPlayingPreview && (
+        <Icon icon={faPlay} onClick={() => onPlayClick()} />
+      )}
+      {isPlayingPreview && (
+        <Icon icon={faPause} onClick={() => onPlayClick()} />
+      )}
       <Icon icon={faStepForward} onClick={() => setClickedForward(true)} />
     </div>
   );
