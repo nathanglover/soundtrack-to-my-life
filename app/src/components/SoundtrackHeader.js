@@ -6,7 +6,7 @@ const Title = styled.div`
   font-size: 1.25rem;
   font-weight: 300;
   letter-spacing: 1px;
-  padding: 2.5rem 0px 3px 0;
+  padding: 1.5rem 0px 3px 0;
 `;
 
 const Date = styled.div`

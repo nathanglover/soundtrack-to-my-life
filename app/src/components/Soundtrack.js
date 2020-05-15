@@ -10,7 +10,7 @@ import SoundtrackNav from "./SoundtrackNav";
 
 const SoundtrackBackground = styled.div`
   background-image: linear-gradient(
-    to bottom right,
+    to bottom,
     ${(props) => props.albumColor || "#191414"},
     #191414
   );

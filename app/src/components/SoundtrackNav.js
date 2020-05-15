@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPause,
-  faPauseCircle,
-  faPlay,
-  faPlayCircle,
-  faStepForward,
-  faStepBackward,
-} from "@fortawesome/free-solid-svg-icons";
+import PlayCircleFilledWhiteRoundedIcon from "@material-ui/icons/PlayCircleFilledWhiteRounded";
 
-const Icon = styled(FontAwesomeIcon)`
-  margin: 2rem;
-  font-size: 1.5rem;
-  cursor: pointer;
-`;
+import ShuffleIcon from "@material-ui/icons/Shuffle";
+import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
+import SkipNextIcon from "@material-ui/icons/SkipNext";
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
 
@@ -38,57 +28,54 @@ const getDateString = (date) => {
   );
 };
 
-function SoundtrackNav({ date, previewUrl }) {
-  const [isPlayingPreview, setIsPlayingPreview] = useState(false);
-  const [previewAudio, setPreviewAudio] = useState(new Audio(previewUrl));
-  const [clickedBack, setClickedBack] = useState(false);
-  const [clickedForward, setClickedForward] = useState(false);
-  const previousDate = new Date(date.getTime() - ONE_DAY);
-  const nextDate = new Date(date.getTime() + ONE_DAY);
+const SoundtrackNavContainer = styled.div`
+  margin: 1rem auto;
+  width: 640px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
-  useEffect(() => {
-    setIsPlayingPreview(false);
-    setClickedBack(false);
-    setClickedForward(false);
-  }, [date]);
-
-  useEffect(() => {
-    setPreviewAudio(new Audio(previewUrl));
-  }, [previewUrl]);
-
-  const onPlayClick = () => {
-    if (previewUrl && isPlayingPreview) {
-      previewAudio.pause();
-      setIsPlayingPreview(false);
-    }
-    if (previewUrl && !isPlayingPreview) {
-      previewAudio.play();
-      setIsPlayingPreview(true);
-    }
-  };
-
-  if (clickedBack || clickedForward) {
-    previewAudio.pause();
+  a {
+    color: white;
   }
 
-  if (clickedBack) {
-    return <Redirect to={`/${getDateString(previousDate)}`} />;
+  svg {
+    font-size: 3rem;
+    cursor: pointer;
   }
-  if (clickedForward) {
-    return <Redirect to={`/${getDateString(nextDate)}`} />;
+  svg.middleIcon {
+    font-size: 5rem;
+    margin: 0 1.5rem;
   }
+`;
+
+function SoundtrackNav({ date }) {
+  const previousDate = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate() - 1
+  )
+    .toISOString()
+    .split("T")[0];
+  const nextDate = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate() + 1
+  )
+    .toISOString()
+    .split("T")[0];
 
   return (
-    <div>
-      <Icon icon={faStepBackward} onClick={() => setClickedBack(true)} />
-      {!isPlayingPreview && (
-        <Icon icon={faPlay} onClick={() => onPlayClick()} />
-      )}
-      {isPlayingPreview && (
-        <Icon icon={faPause} onClick={() => onPlayClick()} />
-      )}
-      <Icon icon={faStepForward} onClick={() => setClickedForward(true)} />
-    </div>
+    <SoundtrackNavContainer>
+      <Link to={`/${previousDate}`}>
+        <SkipPreviousIcon />
+      </Link>
+      <PlayCircleFilledWhiteRoundedIcon className="middleIcon" />
+      <Link to={`/${nextDate}`}>
+        <SkipNextIcon />
+      </Link>
+    </SoundtrackNavContainer>
   );
 }
 
