@@ -1,21 +1,46 @@
 const { GraphQLScalarType } = require("graphql");
 const { Kind } = require("graphql/language");
 
+/*
+ * Requires the MongoDB Node.js Driver
+ * https://mongodb.github.io/node-mongodb-native
+ */
+
+const getFilter = ({ date, nextDate }) => {
+  return {
+    track: {
+      $ne: null,
+    },
+    timestamp: {
+      $gte: date,
+      $lt: nextDate,
+    },
+  };
+};
+
+const projection = {
+  timestamp: 1,
+  "track.name": 1,
+  "track.artists.name": 1,
+  "track.urls": 1,
+  "track.album.name": 1,
+  "track.album.images.url": 1,
+};
+const sort = {
+  timestamp: -1,
+};
+
 module.exports = (db) => ({
   Query: {
     timeline: async (obj, { date }, context, info) => {
-      const previousDate = new Date(
+      const nextDate = new Date(
         date.getFullYear(),
         date.getMonth(),
-        date.getDate() - 1
+        date.getDate() + 1
       );
       const timelineObjs = await db
         .collection("timeline")
-        .find({
-          timestamp: { $lte: date, $gt: previousDate },
-          track: { $ne: null },
-        })
-        .sort({ timestamp: 1 })
+        .find(getFilter({ date, nextDate }), { projection, sort })
         .toArray();
       return timelineObjs;
     },

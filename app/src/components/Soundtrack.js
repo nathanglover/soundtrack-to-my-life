@@ -30,11 +30,11 @@ function Soundtrack({ date }) {
   const [track, setTrack] = useState(null);
   const [albumColor, setAlbumColor] = useState("#191414");
   const { loading, error, data } = useQuery(TIMELINE_QUERY, {
-    variables: { date: date.getTime() },
+    variables: { date: date.getTime() + date.getTimezoneOffset() * 60000 },
   });
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && !error) {
       setTimeline(data.timeline);
       if (data.timeline.length > 0) {
         setTrack(data.timeline[0].track);

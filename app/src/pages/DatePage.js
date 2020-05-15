@@ -5,20 +5,19 @@ import NotFound from "./NotFound";
 import { Soundtrack } from "../components";
 
 function DatePage() {
-  const { dateParam } = useParams();
+  let { year, month, day } = useParams();
+  year = parseInt(year);
+  month = parseInt(month);
+  day = parseInt(day);
   const [date, setDate] = useState(null);
   useEffect(() => {
-    if (
-      dateParam &&
-      new Date(dateParam) instanceof Date &&
-      !isNaN(new Date(dateParam))
-    ) {
-      const x = new Date(dateParam);
-      setDate(new Date(x.getTime() + Math.abs(x.getTimezoneOffset() * 60000)));
-    } else if (!dateParam) {
-      setDate(new Date());
+    if (year && month && day) {
+      setDate(new Date(year, month - 1, day));
+    } else {
+      const today = new Date();
+      setDate(new Date(today.getFullYear(), today.getMonth(), today.getDate()));
     }
-  }, [dateParam]);
+  }, [year, month, day]);
 
   if (!date) {
     return <></>;

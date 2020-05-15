@@ -5,7 +5,6 @@ export const TIMELINE_QUERY = gql`
     timeline(date: $date) {
       timestamp
       track {
-        id
         name
         artists {
           name

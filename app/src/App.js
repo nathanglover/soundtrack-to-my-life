@@ -11,7 +11,14 @@ function App() {
       <Router>
         <Switch>
           <Route path="/about" component={About} />
-          <Route exact path={["/:dateParam", "/"]} component={DatePage} />
+          <Route
+            exact
+            path={[
+              "/:year(2020)-:month(0?[1-9]|1[012])-:day(0?[1-9]|[12][0-9]|3[01])",
+              "/",
+            ]}
+            component={DatePage}
+          />
           <Route component={NotFound} />
         </Switch>
       </Router>
