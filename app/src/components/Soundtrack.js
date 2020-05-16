@@ -15,16 +15,20 @@ const SoundtrackBackground = styled.div`
     ${(props) => props.albumColor || "#191414"},
     #191414
   );
-  height: 100vh;
-  width: 100%;
 `;
 
 const SoundtrackContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100vh;
+  max-width: 90vw;
   margin: 0 auto;
-  width: 900px;
-  text-align: center;
   color: #fff;
 `;
+
+const PlayerContainer = styled.div``;
 
 function Soundtrack({ date }) {
   const [timeline, setTimeline] = useState([]);
@@ -49,13 +53,13 @@ function Soundtrack({ date }) {
     <SoundtrackBackground albumColor={albumColor}>
       <SoundtrackContainer>
         <SoundtrackHeader date={date}></SoundtrackHeader>
-        {!loading && timelineObj && timelineObj.track && (
-          <>
+        {!loading && !error && (
+          <PlayerContainer>
             <SoundtrackAlbum
-              album={timelineObj.track.album}
+              timelineObj={timelineObj}
               setAlbumColor={setAlbumColor}
-            ></SoundtrackAlbum>
-            <SoundtrackTrack track={timelineObj.track} />
+            />
+            <SoundtrackTrack timelineObj={timelineObj} />
             <SoundtrackSlider
               date={date}
               timeline={timeline}
@@ -63,8 +67,9 @@ function Soundtrack({ date }) {
               setTimelineObj={setTimelineObj}
             />
             <SoundtrackNav date={date} />
-          </>
+          </PlayerContainer>
         )}
+        <div></div>
       </SoundtrackContainer>
     </SoundtrackBackground>
   );

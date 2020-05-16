@@ -1,22 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 
+const SoundtrackHeaderContainer = styled.div`
+  margin: 1.5rem 0 5rem 0;
+  text-align: center;
+`;
+
 const Title = styled.div`
   text-transform: uppercase;
-  font-size: 1.25rem;
   font-weight: 300;
-  letter-spacing: 1px;
-  padding: 1.5rem 0px 3px 0;
+  font-size: 0.65em;
 `;
 
 const Date = styled.div`
+  margin-top: -0.5em;
+  font-size: 0.7em;
   font-weight: bold;
-  margin: 3px 0 3px 0;
 `;
 
 function SoundtrackHeader({ date }) {
   return (
-    <div>
+    <SoundtrackHeaderContainer>
       <Title>Soundtrack To My Life</Title>
       <Date>
         {date.toLocaleDateString("en-US", {
@@ -27,7 +31,7 @@ function SoundtrackHeader({ date }) {
           day: "numeric",
         })}
       </Date>
-    </div>
+    </SoundtrackHeaderContainer>
   );
 }
 

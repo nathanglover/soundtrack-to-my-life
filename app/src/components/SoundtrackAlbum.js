@@ -2,23 +2,28 @@ import React from "react";
 import * as Vibrant from "node-vibrant";
 import styled from "styled-components";
 
-const AlbumCover = styled.img`
-  margin: 3rem 0 3rem 0;
+const Album = styled.img`
+  max-width: 100%;
+  margin-bottom: 2rem;
 `;
 
-function SoundtrackAlbum({ album, setAlbumColor }) {
+function SoundtrackAlbum({ timelineObj, setAlbumColor }) {
   const onLoad = async (e) => {
     const vibrant = new Vibrant(e.target.src);
     const swatches = await vibrant.getPalette();
     setAlbumColor(swatches.Muted.getHex());
   };
 
+  if (!timelineObj) {
+    return <></>;
+  }
+
   return (
-    <AlbumCover
-      src={album.images[0].url}
+    <Album
+      src={timelineObj.track.album.images[0].url}
       crossOrigin="Anonymous"
       onLoad={(e) => onLoad(e)}
-    ></AlbumCover>
+    />
   );
 }
 

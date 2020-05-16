@@ -3,8 +3,6 @@ import styled from "styled-components";
 import spotifyIconWhite from "../media/spotify-icon-white.png";
 
 const SoundtrackTrackContainer = styled.div`
-  margin: 0 auto;
-  width: 640px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -15,15 +13,11 @@ const SoundtrackTrackContainer = styled.div`
   img {
     width: 30px;
   }
-  svg {
-    font-size: 2rem;
-  }
 `;
 
 const TrackName = styled.div`
   text-align: left;
   font-weight: bold;
-  font-size: 1.5rem;
   color: #fff;
   text-decoration: none;
 `;
@@ -31,21 +25,26 @@ const TrackName = styled.div`
 const ArtistName = styled.div`
   text-align: left;
   color: #b3b3b3;
-  font-size: 1.25rem;
+  font-size: 0.75em;
+  font-weight: 500;
 `;
 
-function SoundtrackTrack({ track }) {
+function SoundtrackTrack({ timelineObj }) {
   return (
     <SoundtrackTrackContainer>
       <div>
-        <TrackName>{track.name}</TrackName>
+        <TrackName>{timelineObj ? timelineObj.track.name : ""}</TrackName>
         <ArtistName>
-          {track.artists.map((artist) => artist.name).join(", ")}
+          {timelineObj
+            ? timelineObj.track.artists.map((artist) => artist.name).join(", ")
+            : ""}
         </ArtistName>
       </div>
-      <a href={track.urls.web}>
-        <img alt="View on Spotify" src={spotifyIconWhite} />
-      </a>
+      {timelineObj && (
+        <a href={timelineObj.track.urls.web}>
+          <img alt="View on Spotify" src={spotifyIconWhite} />
+        </a>
+      )}
     </SoundtrackTrackContainer>
   );
 }

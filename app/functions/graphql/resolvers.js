@@ -21,6 +21,7 @@ const getFilter = ({ date, nextDate }) => {
 const projection = {
   timestamp: 1,
   "track.name": 1,
+  "track.duration_ms": 1,
   "track.artists.name": 1,
   "track.urls": 1,
   "track.album.name": 1,

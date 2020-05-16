@@ -6,6 +6,7 @@ export const TIMELINE_QUERY = gql`
       timestamp
       track {
         name
+        duration_ms
         artists {
           name
         }

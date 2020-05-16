@@ -9,8 +9,6 @@ import SkipNextIcon from "@material-ui/icons/SkipNext";
 import { isToday, getDateURLString } from "../utils";
 
 const SoundtrackNavContainer = styled.div`
-  margin: 0 auto;
-  width: 640px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -21,12 +19,12 @@ const SoundtrackNavContainer = styled.div`
   }
 
   svg {
-    font-size: 3rem;
+    font-size: 2em;
     cursor: pointer;
   }
   svg.middleIcon {
-    font-size: 5rem;
-    margin: 0 1.5rem;
+    font-size: 4em;
+    margin: 0 0.25em;
   }
 `;
 

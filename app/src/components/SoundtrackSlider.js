@@ -3,22 +3,21 @@ import MaterialUiSlider from "@material-ui/core/Slider";
 import styled from "styled-components";
 
 const SoundtrackSliderContainer = styled.div`
-  margin: 1rem auto 0 auto;
-  width: 640px;
+  margin-top: 0.5em;
 `;
 
 const Slider = styled(MaterialUiSlider)`
   span {
     color: white;
   }
+  margin-bottom: -22.5px;
 `;
 
 const TimeContainer = styled.div`
-  margin-top: -0.5rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  font-size: 0.9rem;
+  font-size: 0.55em;
   color: #b3b3b3;
 `;
 
@@ -27,6 +26,8 @@ const DAY_START_TIME = 0;
 const DAY_END_TIME = 86400 * 1000 - 1000;
 
 const getTime = (timestamp, date) => timestamp - date.getTime();
+
+const getTimestamp = (time, date) => time + date.getTime();
 
 const toTimeString = (time) => {
   const options = {
@@ -52,26 +53,35 @@ function SoundtrackSlider({ date, timeline, timelineObj, setTimelineObj }) {
   const [time, setTime] = useState(DAY_START_TIME);
 
   useEffect(() => {
-    const newTime = getTime(timelineObj.timestamp, date);
-    if (time !== newTime) {
-      console.log(time, newTime);
-      setTime(newTime);
-      console.log("here");
+    if (timelineObj) {
+      const newTime = getTime(timelineObj.timestamp, date);
+      if (time !== newTime) {
+        setTime(newTime);
+      }
     }
-  }, [timelineObj, date]);
+  }, [timelineObj, date, time]);
 
   useEffect(() => {
-    const timestamps = timeline.map((obj) => obj.timestamp);
-    setMinTime(getTime(Math.min(...timestamps), date));
-    setMaxTime(getTime(Math.max(...timestamps), date));
+    if (timeline.length > 0) {
+      const timestamps = timeline.map((obj) => obj.timestamp);
+      setMinTime(getTime(Math.min(...timestamps), date));
+      setMaxTime(getTime(Math.max(...timestamps), date));
+    }
   }, [date, timeline]);
 
   const onChange = (value) => {
-    // TODO: show something if timestamp of closest obj is not within one minute of value
     const timestamp = new Date().setTime(date.getTime() + value);
     const obj = getTimelineObj(timeline, timestamp);
-    setTimelineObj(obj);
-    setTime(getTime(obj.timestamp, date));
+    if (
+      Math.abs(obj.timestamp - getTimestamp(value, date)) <
+      obj.track.duration_ms
+    ) {
+      setTimelineObj(obj);
+      setTime(getTime(obj.timestamp, date));
+    } else {
+      setTimelineObj(null);
+      setTime(value);
+    }
   };
 
   return (
