@@ -7,6 +7,10 @@ const Album = styled.div`
   margin-bottom: 2rem;
   width: ${(props) => props.size};
   height: ${(props) => props.size};
+  img {
+    width: ${(props) => props.size};
+    height: ${(props) => props.size};
+  }
 `;
 
 function SoundtrackAlbum({
