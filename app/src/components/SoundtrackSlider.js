@@ -27,7 +27,6 @@ const DAY_START_TIME = 0;
 const DAY_END_TIME = 86400 * 1000 - 1000;
 
 const getTime = (timestamp, date) => timestamp - date.getTime();
-
 const getTimestamp = (time, date) => time + date.getTime();
 
 const toTimeString = (time) => {
@@ -79,19 +78,17 @@ function SoundtrackSlider({
   const onChange = (value) => {
     const timestamp = new Date().setTime(date.getTime() + value);
     const obj = getTimelineObj(timeline, timestamp);
-    setTimelineObj(obj);
-    setTime(getTime(obj.timestamp, date));
-    // if (
-    //   Math.abs(obj.timestamp - getTimestamp(value, date)) <
-    //   obj.track.duration_ms
-    // ) {
-    //   setTimelineObj(obj);
-    //   setTime(getTime(obj.timestamp, date));
-    // } else {
-    //   console.log("here");
-    //   setTimelineObj(null);
-    //   setTime(value);
-    // }
+    if (
+      Math.abs(obj.timestamp - getTimestamp(value, date)) <
+      obj.track.duration_ms
+    ) {
+      setTimelineObj(obj);
+      setTime(getTime(obj.timestamp, date));
+    } else {
+      console.log("here");
+      setTimelineObj(null);
+      setTime(value);
+    }
   };
 
   return (

@@ -32,11 +32,13 @@ function SoundtrackTrack({ timelineObj, isLoadingAlbum }) {
   return (
     <SoundtrackTrackContainer isLoadingAlbum={isLoadingAlbum}>
       <div>
-        <TrackName>{timelineObj ? timelineObj.track.name : "hell"}</TrackName>
+        <TrackName>
+          {timelineObj ? timelineObj.track.name : "Silence"}
+        </TrackName>
         <ArtistName>
           {timelineObj
             ? timelineObj.track.artists.map((artist) => artist.name).join(", ")
-            : "hell "}
+            : "..."}
         </ArtistName>
       </div>
       {timelineObj && (
