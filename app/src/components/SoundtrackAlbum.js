@@ -4,9 +4,11 @@ import styled from "styled-components";
 
 const Album = styled.div`
   display: ${(props) => (props.isLoading ? "none" : "block")};
-  width: ${(props) => props.size}px;
-  height: ${(props) => props.size}px;
   margin-bottom: 2rem;
+  img {
+    width: ${(props) => props.size};
+    height: ${(props) => props.size};
+  }
 `;
 
 function SoundtrackAlbum({
@@ -19,7 +21,12 @@ function SoundtrackAlbum({
 
   const onLoad = async (e) => {
     if (!size) {
-      setSize(e.target.width);
+      console.log(window.innerWidth);
+      setSize(
+        window.innerWidth * 0.9 > e.target.width
+          ? `${e.target.width}px`
+          : "90vw"
+      );
     }
     const vibrant = new Vibrant(e.target.src);
     const swatches = await vibrant.getPalette();
