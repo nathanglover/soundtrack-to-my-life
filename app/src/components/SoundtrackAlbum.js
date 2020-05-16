@@ -5,10 +5,8 @@ import styled from "styled-components";
 const Album = styled.div`
   display: ${(props) => (props.isLoading ? "none" : "block")};
   margin-bottom: 2rem;
-  img {
-    width: ${(props) => props.size};
-    height: ${(props) => props.size};
-  }
+  width: ${(props) => props.size};
+  height: ${(props) => props.size};
 `;
 
 function SoundtrackAlbum({
