@@ -27,7 +27,7 @@ const projection = {
   "track.album.images.url": 1,
 };
 const sort = {
-  timestamp: -1,
+  timestamp: 1,
 };
 
 module.exports = (db) => ({

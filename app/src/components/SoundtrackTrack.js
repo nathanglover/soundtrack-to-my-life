@@ -24,7 +24,6 @@ const TrackName = styled.div`
   text-align: left;
   font-weight: bold;
   font-size: 1.5rem;
-  margin-bottom: 0.75rem;
   color: #fff;
   text-decoration: none;
 `;
@@ -32,7 +31,7 @@ const TrackName = styled.div`
 const ArtistName = styled.div`
   text-align: left;
   color: #b3b3b3;
-  font-weight: bold;
+  font-size: 1.25rem;
 `;
 
 function SoundtrackTrack({ track }) {
@@ -40,10 +39,12 @@ function SoundtrackTrack({ track }) {
     <SoundtrackTrackContainer>
       <div>
         <TrackName>{track.name}</TrackName>
-        <ArtistName>{track.artists[0].name}</ArtistName>
+        <ArtistName>
+          {track.artists.map((artist) => artist.name).join(", ")}
+        </ArtistName>
       </div>
       <a href={track.urls.web}>
-        <img src={spotifyIconWhite} />
+        <img alt="View on Spotify" src={spotifyIconWhite} />
       </a>
     </SoundtrackTrackContainer>
   );

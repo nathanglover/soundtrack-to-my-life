@@ -1,35 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import PlayCircleFilledWhiteRoundedIcon from "@material-ui/icons/PlayCircleFilledWhiteRounded";
 
-import ShuffleIcon from "@material-ui/icons/Shuffle";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 
-const ONE_DAY = 24 * 60 * 60 * 1000;
-
-const isToday = (date) => {
-  const today = new Date();
-  return (
-    today.getFullYear === date.getFullYear &&
-    today.getMonth() === date.getMonth() &&
-    today.getDate() === date.getDate()
-  );
-};
-
-const getDateString = (date) => {
-  return (
-    date.getFullYear() +
-    "-" +
-    ("0" + (date.getMonth() + 1)).slice(-2) +
-    "-" +
-    ("0" + date.getDate()).slice(-2)
-  );
-};
+import { isToday, getDateURLString } from "../utils";
 
 const SoundtrackNavContainer = styled.div`
-  margin: 1rem auto;
+  margin: 0 auto;
   width: 640px;
   display: flex;
   flex-direction: row;
@@ -51,30 +31,24 @@ const SoundtrackNavContainer = styled.div`
 `;
 
 function SoundtrackNav({ date }) {
-  const previousDate = new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate() - 1
-  )
-    .toISOString()
-    .split("T")[0];
-  const nextDate = new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate() + 1
-  )
-    .toISOString()
-    .split("T")[0];
-
+  const previousDate = getDateURLString(date, -1);
+  const nextDate = getDateURLString(date, 1);
+  const style = {
+    visibility: "hidden",
+  };
+  const showNext = !isToday(date);
   return (
     <SoundtrackNavContainer>
       <Link to={`/${previousDate}`}>
         <SkipPreviousIcon />
       </Link>
       <PlayCircleFilledWhiteRoundedIcon className="middleIcon" />
-      <Link to={`/${nextDate}`}>
-        <SkipNextIcon />
-      </Link>
+      {showNext && (
+        <Link to={`/${nextDate}`}>
+          <SkipNextIcon />
+        </Link>
+      )}
+      {!showNext && <SkipNextIcon style={style} />}
     </SoundtrackNavContainer>
   );
 }

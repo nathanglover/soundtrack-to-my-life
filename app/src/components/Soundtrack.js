@@ -6,6 +6,7 @@ import { TIMELINE_QUERY } from "../graphql";
 import SoundtrackAlbum from "./SoundtrackAlbum";
 import SoundtrackHeader from "./SoundtrackHeader";
 import SoundtrackTrack from "./SoundtrackTrack";
+import SoundtrackSlider from "./SoundtrackSlider";
 import SoundtrackNav from "./SoundtrackNav";
 
 const SoundtrackBackground = styled.div`
@@ -27,7 +28,7 @@ const SoundtrackContainer = styled.div`
 
 function Soundtrack({ date }) {
   const [timeline, setTimeline] = useState([]);
-  const [track, setTrack] = useState(null);
+  const [timelineObj, setTimelineObj] = useState(null);
   const [albumColor, setAlbumColor] = useState("#191414");
   const { loading, error, data } = useQuery(TIMELINE_QUERY, {
     variables: { date: date.getTime() + date.getTimezoneOffset() * 60000 },
@@ -37,23 +38,31 @@ function Soundtrack({ date }) {
     if (!loading && !error) {
       setTimeline(data.timeline);
       if (data.timeline.length > 0) {
-        setTrack(data.timeline[0].track);
+        const obj =
+          data.timeline[Math.floor(Math.random() * data.timeline.length)];
+        setTimelineObj(obj);
       }
     }
-  }, [data, loading]);
+  }, [data, error, loading]);
 
   return (
     <SoundtrackBackground albumColor={albumColor}>
       <SoundtrackContainer>
         <SoundtrackHeader date={date}></SoundtrackHeader>
-        {!loading && track && (
+        {!loading && timelineObj && timelineObj.track && (
           <>
             <SoundtrackAlbum
-              album={track.album}
+              album={timelineObj.track.album}
               setAlbumColor={setAlbumColor}
             ></SoundtrackAlbum>
-            <SoundtrackTrack track={track} />
-            <SoundtrackNav date={date} previewUrl={track.urls.preview} />
+            <SoundtrackTrack track={timelineObj.track} />
+            <SoundtrackSlider
+              date={date}
+              timeline={timeline}
+              timelineObj={timelineObj}
+              setTimelineObj={setTimelineObj}
+            />
+            <SoundtrackNav date={date} />
           </>
         )}
       </SoundtrackContainer>
