@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const SoundtrackHeaderContainer = styled.div`
-  margin: 1.5rem 0 5rem 0;
+  margin: 1.5em 0 5em 0;
   text-align: center;
 `;
 
