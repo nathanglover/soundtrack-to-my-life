@@ -19,11 +19,11 @@ const SoundtrackNavContainer = styled.div`
   }
 
   svg {
-    font-size: 1.25em;
+    font-size: 33px;
     cursor: pointer;
   }
   svg.middleIcon {
-    font-size: 2.5em;
+    font-size: 66px;
     margin: 0 0.25em;
   }
 `;
