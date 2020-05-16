@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+import { isToday } from "../utils";
+
 const SoundtrackHeaderContainer = styled.div`
   margin: 1em 0 1em 0;
   text-align: center;
@@ -23,13 +25,15 @@ function SoundtrackHeader({ date }) {
     <SoundtrackHeaderContainer>
       <Title>Soundtrack To My Life</Title>
       <Date>
-        {date.toLocaleDateString("en-US", {
-          timezone: "America/New_York",
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
+        {isToday(date)
+          ? "Today"
+          : date.toLocaleDateString("en-US", {
+              timezone: "America/New_York",
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
       </Date>
     </SoundtrackHeaderContainer>
   );

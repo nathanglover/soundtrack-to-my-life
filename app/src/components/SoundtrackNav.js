@@ -9,7 +9,7 @@ import SkipNextIcon from "@material-ui/icons/SkipNext";
 import { isToday, getDateURLString } from "../utils";
 
 const SoundtrackNavContainer = styled.div`
-  display: flex;
+  display: ${(props) => (props.isLoadingAlbum ? "none" : "flex")};
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -28,7 +28,7 @@ const SoundtrackNavContainer = styled.div`
   }
 `;
 
-function SoundtrackNav({ date }) {
+function SoundtrackNav({ date, isLoadingAlbum }) {
   const previousDate = getDateURLString(date, -1);
   const nextDate = getDateURLString(date, 1);
   const style = {
@@ -36,7 +36,7 @@ function SoundtrackNav({ date }) {
   };
   const showNext = !isToday(date);
   return (
-    <SoundtrackNavContainer>
+    <SoundtrackNavContainer isLoadingAlbum={isLoadingAlbum}>
       <Link to={`/${previousDate}`}>
         <SkipPreviousIcon />
       </Link>

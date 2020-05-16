@@ -3,7 +3,7 @@ import styled from "styled-components";
 import spotifyIconWhite from "../media/spotify-icon-white.png";
 
 const SoundtrackTrackContainer = styled.div`
-  display: flex;
+  display: ${(props) => (props.isLoadingAlbum ? "none" : "flex")};
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -19,7 +19,6 @@ const TrackName = styled.div`
   text-align: left;
   font-weight: bold;
   color: #fff;
-  text-decoration: none;
 `;
 
 const ArtistName = styled.div`
@@ -29,15 +28,15 @@ const ArtistName = styled.div`
   font-weight: 500;
 `;
 
-function SoundtrackTrack({ timelineObj }) {
+function SoundtrackTrack({ timelineObj, isLoadingAlbum }) {
   return (
-    <SoundtrackTrackContainer>
+    <SoundtrackTrackContainer isLoadingAlbum={isLoadingAlbum}>
       <div>
-        <TrackName>{timelineObj ? timelineObj.track.name : ""}</TrackName>
+        <TrackName>{timelineObj ? timelineObj.track.name : "hell"}</TrackName>
         <ArtistName>
           {timelineObj
             ? timelineObj.track.artists.map((artist) => artist.name).join(", ")
-            : ""}
+            : "hell "}
         </ArtistName>
       </div>
       {timelineObj && (

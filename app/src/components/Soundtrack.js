@@ -3,6 +3,8 @@ import { useQuery } from "@apollo/react-hooks";
 import styled from "styled-components";
 
 import { TIMELINE_QUERY } from "../graphql";
+import { isToday } from "../utils";
+
 import SoundtrackAlbum from "./SoundtrackAlbum";
 import SoundtrackHeader from "./SoundtrackHeader";
 import SoundtrackTrack from "./SoundtrackTrack";
@@ -33,6 +35,7 @@ const PlayerContainer = styled.div``;
 function Soundtrack({ date }) {
   const [timeline, setTimeline] = useState([]);
   const [timelineObj, setTimelineObj] = useState(null);
+  const [isLoadingAlbum, setIsLoadingAlbum] = useState(true);
   const [albumColor, setAlbumColor] = useState("#191414");
   const { loading, error, data } = useQuery(TIMELINE_QUERY, {
     variables: { date: date.getTime() + date.getTimezoneOffset() * 60000 },
@@ -40,14 +43,18 @@ function Soundtrack({ date }) {
 
   useEffect(() => {
     if (!loading && !error) {
-      setTimeline(data.timeline);
-      if (data.timeline.length > 0) {
-        const obj =
-          data.timeline[Math.floor(Math.random() * data.timeline.length)];
+      const timeline = data.timeline;
+      setTimeline(timeline);
+      if (timeline.length > 0) {
+        let obj = timeline[Math.floor(Math.random() * timeline.length)];
+        if (isToday(date)) {
+          obj = timeline[timeline.length - 1];
+        }
+        setIsLoadingAlbum(true);
         setTimelineObj(obj);
       }
     }
-  }, [data, error, loading]);
+  }, [date, data, error, loading]);
 
   return (
     <SoundtrackBackground albumColor={albumColor}>
@@ -57,16 +64,22 @@ function Soundtrack({ date }) {
           <PlayerContainer>
             <SoundtrackAlbum
               timelineObj={timelineObj}
+              isLoadingAlbum={isLoadingAlbum}
+              setIsLoadingAlbum={setIsLoadingAlbum}
               setAlbumColor={setAlbumColor}
             />
-            <SoundtrackTrack timelineObj={timelineObj} />
+            <SoundtrackTrack
+              timelineObj={timelineObj}
+              isLoadingAlbum={isLoadingAlbum}
+            />
             <SoundtrackSlider
               date={date}
               timeline={timeline}
               timelineObj={timelineObj}
+              isLoadingAlbum={isLoadingAlbum}
               setTimelineObj={setTimelineObj}
             />
-            <SoundtrackNav date={date} />
+            <SoundtrackNav date={date} isLoadingAlbum={isLoadingAlbum} />
           </PlayerContainer>
         )}
         <div></div>

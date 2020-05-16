@@ -3,6 +3,7 @@ import MaterialUiSlider from "@material-ui/core/Slider";
 import styled from "styled-components";
 
 const SoundtrackSliderContainer = styled.div`
+  display: ${(props) => (props.isLoadingAlbum ? "none" : "block")};
   margin-top: 0.5em;
 `;
 
@@ -47,7 +48,13 @@ const getTimelineObj = (data, toFind) =>
         : { timestamp: a, ...timelineObjA }
   );
 
-function SoundtrackSlider({ date, timeline, timelineObj, setTimelineObj }) {
+function SoundtrackSlider({
+  date,
+  timeline,
+  timelineObj,
+  isLoadingAlbum,
+  setTimelineObj,
+}) {
   const [minTime, setMinTime] = useState(DAY_START_TIME);
   const [maxTime, setMaxTime] = useState(DAY_END_TIME);
   const [time, setTime] = useState(DAY_START_TIME);
@@ -72,20 +79,23 @@ function SoundtrackSlider({ date, timeline, timelineObj, setTimelineObj }) {
   const onChange = (value) => {
     const timestamp = new Date().setTime(date.getTime() + value);
     const obj = getTimelineObj(timeline, timestamp);
-    if (
-      Math.abs(obj.timestamp - getTimestamp(value, date)) <
-      obj.track.duration_ms
-    ) {
-      setTimelineObj(obj);
-      setTime(getTime(obj.timestamp, date));
-    } else {
-      setTimelineObj(null);
-      setTime(value);
-    }
+    setTimelineObj(obj);
+    setTime(getTime(obj.timestamp, date));
+    // if (
+    //   Math.abs(obj.timestamp - getTimestamp(value, date)) <
+    //   obj.track.duration_ms
+    // ) {
+    //   setTimelineObj(obj);
+    //   setTime(getTime(obj.timestamp, date));
+    // } else {
+    //   console.log("here");
+    //   setTimelineObj(null);
+    //   setTime(value);
+    // }
   };
 
   return (
-    <SoundtrackSliderContainer>
+    <SoundtrackSliderContainer isLoadingAlbum={isLoadingAlbum}>
       <Slider
         min={minTime}
         max={maxTime}
