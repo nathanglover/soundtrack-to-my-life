@@ -24,8 +24,8 @@ const SoundtrackContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  min-height: 100vh;
-  max-width: 90vw;
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
   margin: 0 auto;
   color: #fff;
 `;
