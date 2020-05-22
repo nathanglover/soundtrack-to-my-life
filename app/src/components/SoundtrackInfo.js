@@ -3,7 +3,8 @@ import GitHubIcon from "@material-ui/icons/GitHub";
 import styled from "styled-components";
 
 const SoundtrackInfoContainer = styled.div`
-  height: 2em;
+  height: 1em;
+  margin-bottom: 1em;
   a {
     color: white;
     font-size: 0.8em;
