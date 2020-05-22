@@ -38,6 +38,8 @@ function Soundtrack({ date }) {
   const [timelineObj, setTimelineObj] = useState(null);
   const [isLoadingAlbum, setIsLoadingAlbum] = useState(true);
   const [albumColor, setAlbumColor] = useState("#191414");
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const { loading, error, data } = useQuery(TIMELINE_QUERY, {
     variables: { date: date.getTime() + date.getTimezoneOffset() * 60000 },
   });
@@ -45,7 +47,6 @@ function Soundtrack({ date }) {
   useEffect(() => {
     if (!loading && !error) {
       const timeline = data.timeline;
-      setTimeline(timeline);
       if (timeline.length > 0) {
         let obj = timeline[Math.floor(Math.random() * timeline.length)];
         if (isToday(date)) {
@@ -53,6 +54,7 @@ function Soundtrack({ date }) {
         }
         setIsLoadingAlbum(true);
         setTimelineObj(obj);
+        setTimeline(timeline);
       }
     }
   }, [date, data, error, loading]);
@@ -61,7 +63,7 @@ function Soundtrack({ date }) {
     <SoundtrackBackground albumColor={albumColor}>
       <SoundtrackContainer>
         <SoundtrackHeader date={date}></SoundtrackHeader>
-        {!loading && !error && (
+        {!loading && !error && timeline.length > 0 && (
           <PlayerContainer>
             <SoundtrackAlbum
               timelineObj={timelineObj}
@@ -79,8 +81,14 @@ function Soundtrack({ date }) {
               timelineObj={timelineObj}
               isLoadingAlbum={isLoadingAlbum}
               setTimelineObj={setTimelineObj}
+              isPlaying={isPlaying}
             />
-            <SoundtrackNav date={date} isLoadingAlbum={isLoadingAlbum} />
+            <SoundtrackNav
+              date={date}
+              isLoadingAlbum={isLoadingAlbum}
+              isPlaying={isPlaying}
+              setIsPlaying={setIsPlaying}
+            />
           </PlayerContainer>
         )}
         <div></div>

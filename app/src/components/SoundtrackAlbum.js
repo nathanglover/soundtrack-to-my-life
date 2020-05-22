@@ -23,7 +23,6 @@ function SoundtrackAlbum({
 
   const onLoad = async (e) => {
     if (!size) {
-      console.log(window.innerWidth);
       setSize(
         window.innerWidth * 0.9 > e.target.width
           ? `${e.target.width}px`
@@ -38,7 +37,7 @@ function SoundtrackAlbum({
 
   return (
     <Album isLoading={isLoadingAlbum} size={size}>
-      {timelineObj && (
+      {timelineObj.track && (
         <img
           alt={timelineObj.track.album.name}
           src={timelineObj.track.album.images[0].url}

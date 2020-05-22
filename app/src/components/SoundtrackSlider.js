@@ -23,6 +23,7 @@ const TimeContainer = styled.div`
 `;
 
 const ONE_MINUTE = 60000;
+const ONE_DAY = 6000 * 60 * 24;
 const DAY_START_TIME = 0;
 const DAY_END_TIME = 86400 * 1000 - 1000;
 
@@ -53,43 +54,37 @@ function SoundtrackSlider({
   timelineObj,
   isLoadingAlbum,
   setTimelineObj,
+  isPlaying,
 }) {
   const [minTime, setMinTime] = useState(DAY_START_TIME);
   const [maxTime, setMaxTime] = useState(DAY_END_TIME);
-  const [time, setTime] = useState(DAY_START_TIME);
+  const [time, setTime] = useState(getTime(timelineObj.timestamp, date));
 
   useEffect(() => {
-    if (timelineObj) {
-      const newTime = getTime(timelineObj.timestamp, date);
-      if (time !== newTime) {
-        setTime(newTime);
-      }
-    }
-  }, [timelineObj, date, time]);
-
-  useEffect(() => {
-    if (timeline.length > 0) {
-      const timestamps = timeline.map((obj) => obj.timestamp);
-      setMinTime(getTime(Math.min(...timestamps), date));
-      setMaxTime(getTime(Math.max(...timestamps), date));
-    }
+    const timestamps = timeline.map((obj) => obj.timestamp);
+    setMinTime(getTime(Math.min(...timestamps), date));
+    setMaxTime(getTime(Math.max(...timestamps), date));
   }, [date, timeline]);
 
-  const onChange = (value) => {
-    const timestamp = new Date().setTime(date.getTime() + value);
+  useEffect(() => {
+    const timestamp = new Date().setTime(date.getTime() + time);
     const obj = getTimelineObj(timeline, timestamp);
-    if (
-      Math.abs(obj.timestamp - getTimestamp(value, date)) <
-      obj.track.duration_ms
-    ) {
+    const timeDiff = Math.abs(obj.timestamp - getTimestamp(time, date));
+    if (timeDiff < ONE_DAY && timeDiff < obj.track.duration_ms) {
       setTimelineObj(obj);
-      setTime(getTime(obj.timestamp, date));
-    } else {
-      console.log("here");
-      setTimelineObj(null);
-      setTime(value);
+    } else if (timeDiff < ONE_DAY) {
+      setTimelineObj({ timestamp: time });
     }
-  };
+  }, [date, time, timeline, setTimelineObj]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (isPlaying) {
+        setTime((time) => time + ONE_MINUTE);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isPlaying]);
 
   return (
     <SoundtrackSliderContainer isLoadingAlbum={isLoadingAlbum}>
@@ -98,7 +93,7 @@ function SoundtrackSlider({
         max={maxTime}
         value={time}
         step={ONE_MINUTE}
-        onChange={(_, value) => onChange(value)}
+        onChange={(_, value) => setTime(value)}
       />
       <TimeContainer>
         <div>{toTimeString(time)}</div>

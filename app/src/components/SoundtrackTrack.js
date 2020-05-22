@@ -33,15 +33,15 @@ function SoundtrackTrack({ timelineObj, isLoadingAlbum }) {
     <SoundtrackTrackContainer isLoadingAlbum={isLoadingAlbum}>
       <div>
         <TrackName>
-          {timelineObj ? timelineObj.track.name : "Silence"}
+          {timelineObj.track ? timelineObj.track.name : "Silence"}
         </TrackName>
         <ArtistName>
-          {timelineObj
+          {timelineObj.track
             ? timelineObj.track.artists.map((artist) => artist.name).join(", ")
             : "..."}
         </ArtistName>
       </div>
-      {timelineObj && (
+      {timelineObj.track && (
         <a href={timelineObj.track.urls.web}>
           <img alt="View on Spotify" src={spotifyIconWhite} />
         </a>

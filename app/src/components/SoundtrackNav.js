@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import PlayCircleFilledWhiteRoundedIcon from "@material-ui/icons/PlayCircleFilledWhiteRounded";
+import PauseCircleFilledRoundedIcon from "@material-ui/icons/PauseCircleFilledRounded";
 
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
@@ -28,7 +29,7 @@ const SoundtrackNavContainer = styled.div`
   }
 `;
 
-function SoundtrackNav({ date, isLoadingAlbum }) {
+function SoundtrackNav({ date, isLoadingAlbum, isPlaying, setIsPlaying }) {
   const previousDate = getDateURLString(date, -1);
   const nextDate = getDateURLString(date, 1);
   const style = {
@@ -37,12 +38,26 @@ function SoundtrackNav({ date, isLoadingAlbum }) {
   const showNext = !isToday(date);
   return (
     <SoundtrackNavContainer isLoadingAlbum={isLoadingAlbum}>
-      <Link to={`/${previousDate}`}>
+      <Link
+        to={`/${previousDate}`}
+        aria-label={`Soundtrack for ${previousDate}`}
+      >
         <SkipPreviousIcon />
       </Link>
-      <PlayCircleFilledWhiteRoundedIcon className="middleIcon" />
+      {isPlaying && (
+        <PauseCircleFilledRoundedIcon
+          className="middleIcon"
+          onClick={() => setIsPlaying(false)}
+        />
+      )}
+      {!isPlaying && (
+        <PlayCircleFilledWhiteRoundedIcon
+          className="middleIcon"
+          onClick={() => setIsPlaying(true)}
+        />
+      )}
       {showNext && (
-        <Link to={`/${nextDate}`}>
+        <Link to={`/${nextDate}`} aria-label={`Soundtrack for ${nextDate}`}>
           <SkipNextIcon />
         </Link>
       )}
