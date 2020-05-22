@@ -9,6 +9,7 @@ import SoundtrackHeader from "./SoundtrackHeader";
 import SoundtrackTrack from "./SoundtrackTrack";
 import SoundtrackSlider from "./SoundtrackSlider";
 import SoundtrackNav from "./SoundtrackNav";
+import SoundtrackInfo from "./SoundtrackInfo";
 
 const SoundtrackBackground = styled.div`
   background-image: linear-gradient(
@@ -87,7 +88,7 @@ function Soundtrack({ date }) {
             />
           </PlayerContainer>
         )}
-        <div></div>
+        <SoundtrackInfo />
       </SoundtrackContainer>
     </SoundtrackBackground>
   );
