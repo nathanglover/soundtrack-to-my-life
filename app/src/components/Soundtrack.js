@@ -3,7 +3,6 @@ import { useQuery } from "@apollo/react-hooks";
 import styled from "styled-components";
 
 import { TIMELINE_QUERY } from "../graphql";
-import { isToday } from "../utils";
 
 import SoundtrackAlbum from "./SoundtrackAlbum";
 import SoundtrackHeader from "./SoundtrackHeader";
@@ -48,12 +47,8 @@ function Soundtrack({ date }) {
     if (!loading && !error) {
       const timeline = data.timeline;
       if (timeline.length > 0) {
-        let obj = timeline[Math.floor(Math.random() * timeline.length)];
-        if (isToday(date)) {
-          obj = timeline[timeline.length - 1];
-        }
         setIsLoadingAlbum(true);
-        setTimelineObj(obj);
+        setTimelineObj(timeline[0]);
         setTimeline(timeline);
       }
     }
@@ -82,6 +77,7 @@ function Soundtrack({ date }) {
               isLoadingAlbum={isLoadingAlbum}
               setTimelineObj={setTimelineObj}
               isPlaying={isPlaying}
+              setIsPlaying={setIsPlaying}
             />
             <SoundtrackNav
               date={date}

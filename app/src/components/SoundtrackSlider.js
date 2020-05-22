@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import MaterialUiSlider from "@material-ui/core/Slider";
 import styled from "styled-components";
+import { isToday, getDateURLString } from "../utils";
 
 const SoundtrackSliderContainer = styled.div`
   display: ${(props) => (props.isLoadingAlbum ? "none" : "block")};
@@ -55,6 +57,7 @@ function SoundtrackSlider({
   isLoadingAlbum,
   setTimelineObj,
   isPlaying,
+  setIsPlaying,
 }) {
   const [minTime, setMinTime] = useState(DAY_START_TIME);
   const [maxTime, setMaxTime] = useState(DAY_END_TIME);
@@ -72,19 +75,35 @@ function SoundtrackSlider({
     const timeDiff = Math.abs(obj.timestamp - getTimestamp(time, date));
     if (timeDiff < ONE_DAY && timeDiff < obj.track.duration_ms) {
       setTimelineObj(obj);
+      if (time === maxTime && isToday(date)) {
+        setIsPlaying(false);
+      }
     } else if (timeDiff < ONE_DAY) {
       setTimelineObj({ timestamp: time });
+    } else {
+      setTime(getTime(timelineObj.timestamp, date));
     }
-  }, [date, time, timeline, setTimelineObj]);
+  }, [date, time, maxTime, timeline, timelineObj.timestamp, setIsPlaying, setTimelineObj]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (isPlaying) {
-        setTime((time) => time + ONE_MINUTE);
+        setTime((time) => {
+          const nextTime = time + ONE_MINUTE;
+          if (nextTime > maxTime) {
+            return maxTime;
+          }
+          return time + ONE_MINUTE;
+        });
       }
-    }, 1000);
+    }, 500);
     return () => clearInterval(interval);
-  }, [isPlaying]);
+  }, [isPlaying, maxTime, setIsPlaying]);
+
+  if (isPlaying && !isToday(date) && time === maxTime) {
+    const nextDate = getDateURLString(date, 1);
+    return <Redirect to={`/${nextDate}`} />;
+  }
 
   return (
     <SoundtrackSliderContainer isLoadingAlbum={isLoadingAlbum}>
