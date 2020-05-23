@@ -1,20 +1,27 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import styled from "styled-components";
 
 const SoundtrackInfoContainer = styled.div`
   height: 1em;
-  margin-bottom: 1em;
+  margin-top: 1.5em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   a {
     color: white;
-    font-size: 0.8em;
     display: flex;
     flex-direction: row;
     align-items: center;
+    font-size: 0.65em;
     text-decoration: none;
   }
+  a:hover {
+    text-decoration: underline;
+  }
   span {
-    font-size: 0.65em;
     margin-left: 5px;
   }
 `;
@@ -22,9 +29,9 @@ const SoundtrackInfoContainer = styled.div`
 function SoundtrackInfo() {
   return (
     <SoundtrackInfoContainer>
+      <Link to="/about">About</Link>
       <a href="https://github.com/nathanglover/soundtrack-to-my-life">
         <GitHubIcon />
-        <span>Nathan Glover</span>
       </a>
     </SoundtrackInfoContainer>
   );

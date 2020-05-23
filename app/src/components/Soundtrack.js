@@ -26,9 +26,14 @@ const SoundtrackContainer = styled.div`
   align-items: center;
   height: 100vh; /* Fallback for browsers that do not support Custom Properties */
   height: calc(var(--vh, 1vh) * 100);
-  overflow-y: hidden;
+  overflow-y: auto;
   margin: 0 auto;
   color: #fff;
+`;
+
+const Name = styled.div`
+  font-size: 0.5em;
+  margin-bottom: 1em;
 `;
 
 const PlayerContainer = styled.div``;
@@ -86,9 +91,10 @@ function Soundtrack({ date }) {
               isPlaying={isPlaying}
               setIsPlaying={setIsPlaying}
             />
+            <SoundtrackInfo />
           </PlayerContainer>
         )}
-        <SoundtrackInfo />
+        <Name>Nathan Glover</Name>
       </SoundtrackContainer>
     </SoundtrackBackground>
   );

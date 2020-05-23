@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { isToday } from "../utils";
@@ -8,10 +9,15 @@ const SoundtrackHeaderContainer = styled.div`
   text-align: center;
 `;
 
-const Title = styled.div`
+const Title = styled(Link)`
   text-transform: uppercase;
   font-weight: 300;
   font-size: 0.65em;
+  color: white;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const Date = styled.div`
@@ -23,7 +29,7 @@ const Date = styled.div`
 function SoundtrackHeader({ date }) {
   return (
     <SoundtrackHeaderContainer>
-      <Title>Soundtrack To My Life</Title>
+      <Title to="/">Soundtrack To My Life</Title>
       <Date>
         {isToday(date)
           ? "Today"

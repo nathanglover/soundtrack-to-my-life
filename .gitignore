@@ -53,7 +53,7 @@ app/netlify.toml
 .pnp.js
 
 # testing
-/coverage
+**/coverage
 
 # production
 app/build/*
