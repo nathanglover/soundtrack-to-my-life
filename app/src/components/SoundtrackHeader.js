@@ -27,7 +27,7 @@ const Date = styled.div`
 `;
 
 function SoundtrackHeader({ date }) {
-  return (
+  const component = (
     <SoundtrackHeaderContainer>
       <Title to="/">Soundtrack To My Life</Title>
       <Date>
@@ -43,6 +43,7 @@ function SoundtrackHeader({ date }) {
       </Date>
     </SoundtrackHeaderContainer>
   );
+  return component;
 }
 
 export default SoundtrackHeader;

@@ -1,4 +1,4 @@
-import { isToday, getDateURLString } from "./utils";
+import { isToday, getDateURLString } from "../utils";
 
 test("isToday === true", () => {
   expect(isToday(new Date())).toBe(true);

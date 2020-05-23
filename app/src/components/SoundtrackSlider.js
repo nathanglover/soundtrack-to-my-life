@@ -13,7 +13,7 @@ const Slider = styled(MaterialUiSlider)`
   span {
     color: white;
   }
-  margin-bottom: -22.5px;
+  margin-bottom: -20px;
 `;
 
 const TimeContainer = styled.div`
