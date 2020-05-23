@@ -1,6 +1,6 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
-import { render, waitForElement } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import SoundtrackInfo from "../SoundtrackInfo";
 
 it("renders about", async () => {

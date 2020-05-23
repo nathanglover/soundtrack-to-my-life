@@ -1,5 +1,5 @@
 import React from "react";
-import { render, waitForElement } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import SoundtrackTrack from "../SoundtrackTrack";
 
 it("renders silence when track is null", async () => {

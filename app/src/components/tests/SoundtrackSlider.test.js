@@ -2,7 +2,7 @@ import React from "react";
 import { act } from "react-dom/test-utils";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import SoundtrackSlider, { getTime } from "../SoundtrackSlider";
 
 const timeline = [
@@ -98,8 +98,7 @@ it("setInterval if isPlaying", async () => {
       />
     );
     await waitFor(() => expect(setIsPlaying).toHaveBeenCalledWith(false), {
-      timeout: 5000,
-      interval: 500,
+      timeout: 2000,
     });
   });
 });

@@ -44,5 +44,8 @@ it("renders when track album is not null", async () => {
   );
   const img = container.querySelector("img");
   fireEvent.load(img);
-  await waitFor(() => expect(setAlbumCover).toHaveBeenCalledTimes(1));
+  await waitFor(() => expect(setAlbumCover).toHaveBeenCalledTimes(1), {
+    timeout: 5000,
+    interval: 500,
+  });
 });

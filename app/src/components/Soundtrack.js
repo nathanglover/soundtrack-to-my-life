@@ -60,7 +60,7 @@ function Soundtrack({ date }) {
     }
   }, [date, data, error, loading]);
 
-  return (
+  const component = (
     <SoundtrackBackground albumColor={albumColor}>
       <SoundtrackContainer>
         <SoundtrackHeader date={date}></SoundtrackHeader>
@@ -98,6 +98,7 @@ function Soundtrack({ date }) {
       </SoundtrackContainer>
     </SoundtrackBackground>
   );
+  return component;
 }
 
 export default Soundtrack;

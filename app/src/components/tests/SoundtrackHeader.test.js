@@ -1,6 +1,6 @@
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
-import { render, waitForElement } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import SoundtrackHeader from "../SoundtrackHeader";
 
 it("renders today", async () => {
