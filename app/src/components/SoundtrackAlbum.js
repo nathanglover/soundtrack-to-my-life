@@ -29,13 +29,12 @@ function SoundtrackAlbum({
           : "90vw"
       );
     }
-    const vibrant = new Vibrant(e.target.src);
+    const vibrant = Vibrant.from(e.target.src);
     const swatches = await vibrant.getPalette();
     setAlbumColor(swatches.Muted.getHex());
     setIsLoadingAlbum(false);
   };
-
-  return (
+  const container = (
     <Album isLoading={isLoadingAlbum} size={size}>
       {timelineObj.track && (
         <img
@@ -47,6 +46,7 @@ function SoundtrackAlbum({
       )}
     </Album>
   );
+  return container;
 }
 
 export default SoundtrackAlbum;

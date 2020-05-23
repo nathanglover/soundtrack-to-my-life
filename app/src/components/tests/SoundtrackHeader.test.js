@@ -9,7 +9,7 @@ it("renders today", async () => {
       <SoundtrackHeader date={new Date()} />
     </MemoryRouter>
   );
-  await waitForElement(() => getByText("Today"));
+  expect(getByText("Today")).toBeInTheDocument();
 });
 
 it("renders date string", async () => {
@@ -18,5 +18,5 @@ it("renders date string", async () => {
       <SoundtrackHeader date={new Date(2020, 4, 22)} />
     </MemoryRouter>
   );
-  await waitForElement(() => getByText("Friday, May 22, 2020"));
+  expect(getByText("Friday, May 22, 2020")).toBeInTheDocument();
 });

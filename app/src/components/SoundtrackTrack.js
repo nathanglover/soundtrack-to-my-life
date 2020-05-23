@@ -29,7 +29,7 @@ const ArtistName = styled.div`
 `;
 
 function SoundtrackTrack({ timelineObj, isLoadingAlbum }) {
-  return (
+  const component = (
     <SoundtrackTrackContainer isLoadingAlbum={isLoadingAlbum}>
       <div>
         <TrackName>
@@ -48,6 +48,7 @@ function SoundtrackTrack({ timelineObj, isLoadingAlbum }) {
       )}
     </SoundtrackTrackContainer>
   );
+  return component;
 }
 
 export default SoundtrackTrack;

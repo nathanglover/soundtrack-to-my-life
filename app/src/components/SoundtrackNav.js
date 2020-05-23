@@ -32,11 +32,8 @@ const SoundtrackNavContainer = styled.div`
 function SoundtrackNav({ date, isLoadingAlbum, isPlaying, setIsPlaying }) {
   const previousDate = getDateURLString(date, -1);
   const nextDate = getDateURLString(date, 1);
-  const style = {
-    visibility: "hidden",
-  };
   const showNext = !isToday(date);
-  return (
+  const component = (
     <SoundtrackNavContainer isLoadingAlbum={isLoadingAlbum}>
       <Link
         to={`/${previousDate}`}
@@ -46,12 +43,14 @@ function SoundtrackNav({ date, isLoadingAlbum, isPlaying, setIsPlaying }) {
       </Link>
       {isPlaying && (
         <PauseCircleFilledRoundedIcon
+          data-testid="pause-icon"
           className="middleIcon"
           onClick={() => setIsPlaying(false)}
         />
       )}
       {!isPlaying && (
         <PlayCircleFilledWhiteRoundedIcon
+          data-testid="play-icon"
           className="middleIcon"
           onClick={() => setIsPlaying(true)}
         />
@@ -61,9 +60,16 @@ function SoundtrackNav({ date, isLoadingAlbum, isPlaying, setIsPlaying }) {
           <SkipNextIcon />
         </Link>
       )}
-      {!showNext && <SkipNextIcon style={style} />}
+      {!showNext && (
+        <SkipNextIcon
+          style={{
+            visibility: "hidden",
+          }}
+        />
+      )}
     </SoundtrackNavContainer>
   );
+  return component;
 }
 
 export default SoundtrackNav;

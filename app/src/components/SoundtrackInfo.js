@@ -27,7 +27,7 @@ const SoundtrackInfoContainer = styled.div`
 `;
 
 function SoundtrackInfo() {
-  return (
+  const component = (
     <SoundtrackInfoContainer>
       <Link to="/about">About</Link>
       <a href="https://github.com/nathanglover/soundtrack-to-my-life">
@@ -35,6 +35,7 @@ function SoundtrackInfo() {
       </a>
     </SoundtrackInfoContainer>
   );
+  return component;
 }
 
 export default SoundtrackInfo;
