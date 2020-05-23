@@ -29,7 +29,7 @@ const ONE_DAY = 6000 * 60 * 24;
 const DAY_START_TIME = 0;
 const DAY_END_TIME = 86400 * 1000 - 1000;
 
-const getTime = (timestamp, date) => timestamp - date.getTime();
+export const getTime = (timestamp, date) => timestamp - date.getTime();
 const getTimestamp = (time, date) => time + date.getTime();
 
 const toTimeString = (time) => {
@@ -83,7 +83,15 @@ function SoundtrackSlider({
     } else {
       setTime(getTime(timelineObj.timestamp, date));
     }
-  }, [date, time, maxTime, timeline, timelineObj.timestamp, setIsPlaying, setTimelineObj]);
+  }, [
+    date,
+    time,
+    maxTime,
+    timeline,
+    timelineObj.timestamp,
+    setIsPlaying,
+    setTimelineObj,
+  ]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -102,17 +110,20 @@ function SoundtrackSlider({
 
   if (isPlaying && !isToday(date) && time === maxTime) {
     const nextDate = getDateURLString(date, 1);
-    return <Redirect to={`/${nextDate}`} />;
+    const component = (
+      <Redirect to={`/${nextDate}`} data-testid="redirect-to-next-date" />
+    );
+    return component;
   }
-
-  return (
+  const component = (
     <SoundtrackSliderContainer isLoadingAlbum={isLoadingAlbum}>
       <Slider
+        name="soundtrack-slider"
         min={minTime}
         max={maxTime}
         value={time}
         step={ONE_MINUTE}
-        onChange={(_, value) => setTime(value)}
+        onChange={(event, value) => setTime(value)}
       />
       <TimeContainer>
         <div>{toTimeString(time)}</div>
@@ -120,6 +131,7 @@ function SoundtrackSlider({
       </TimeContainer>
     </SoundtrackSliderContainer>
   );
+  return component;
 }
 
 export default SoundtrackSlider;

@@ -32,6 +32,11 @@
     "coverageReporters": [
       "text-summary",
       "html"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/src/serviceWorker.js",
+      "/src/index.js"
     ]
   },
   "eslintConfig": {
