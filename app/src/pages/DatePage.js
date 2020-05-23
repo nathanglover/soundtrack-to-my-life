@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
 import { Soundtrack } from "../components";
 
 function DatePage() {
@@ -21,11 +20,13 @@ function DatePage() {
     }
   }, [year, month, day]);
 
+  let component;
   if (!date) {
-    return <></>;
+    component = <></>;
+    return component;
   }
-
-  return <Soundtrack date={date} />;
+  component = <Soundtrack date={date} />;
+  return component;
 }
 
 export default DatePage;
