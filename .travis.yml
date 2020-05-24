@@ -10,6 +10,7 @@ cache:
     - node_modules
 stages:
   - test
+  - deploy
 
 jobs: 
   - stage: test
@@ -32,3 +33,7 @@ jobs:
       - yarn install
     script:
       - yarn coveralls
+  - stage: deploy
+    name: "app"
+    script:
+      - curl -X POST -d {} ${BUILD_HOOK}
