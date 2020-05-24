@@ -6,7 +6,7 @@ import { client } from "./graphql";
 import { About, NotFound, DatePage } from "./pages";
 
 function App() {
-  return (
+  const component = (
     <ApolloProvider client={client}>
       <Router>
         <Switch>
@@ -24,6 +24,7 @@ function App() {
       </Router>
     </ApolloProvider>
   );
+  return component;
 }
 
 export default App;

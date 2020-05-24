@@ -4,7 +4,6 @@ import { Router, Route } from "react-router-dom";
 import { MockedProvider } from "@apollo/react-testing";
 import { render, waitFor } from "@testing-library/react";
 import { createMemoryHistory } from "history";
-import { TIMELINE_QUERY } from "../../graphql";
 import DatePage from "../DatePage";
 
 it("renders a specific date", async () => {
