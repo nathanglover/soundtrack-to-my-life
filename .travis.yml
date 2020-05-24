@@ -34,6 +34,11 @@ jobs:
     script:
       - yarn coveralls
   - stage: deploy
-    name: "app"
+    name: "etl"
+    before_install:
+      - nvm install 12
+      - cd etl
+    install:
+      - yarn install
     script:
-      - curl -X POST -d {} ${BUILD_HOOK}
+      - sls deploy
