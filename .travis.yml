@@ -17,13 +17,13 @@ jobs:
     before_install:
       - cd etl
     install:
-      - pip install -r requirement.txt
+      - pip install -r requirements.txt
     script:
       - python -m pytest --cov=.
   - stage: test
     name: "app"
     before_install:
-      - nvm 12
+      - nvm install 12
       - cd app
     install:
       - yarn install
