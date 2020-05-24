@@ -10,7 +10,7 @@ import pytz
 from etl.config import BUCKET_NAME, USER_ID, get_mongodb_client
 
 MAX_KEYS = 1000
-S3 = boto3.client("s3")
+S3 = boto3.client("s3", region_name="us-east-1")
 
 collection = (
     get_mongodb_client().get_database("soundtrackToMyLife").get_collection("timeline")

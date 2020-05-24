@@ -8,7 +8,7 @@ from sentry_sdk.integrations.aws_lambda import AwsLambdaIntegration
 BUCKET_NAME = "spotify-api"
 USER_ID = "125242111"
 
-client = boto3.client("ssm")
+client = boto3.client("ssm", region_name="us-east-1")
 
 
 def init_sentry(cli=False):

@@ -8,7 +8,7 @@ import requests
 from etl.config import BUCKET_NAME, USER_ID
 from etl.auth import SpotifyAPIAuth
 
-S3 = boto3.resource("s3").Bucket(BUCKET_NAME)
+S3 = boto3.resource("s3", region_name='us-east-1').Bucket(BUCKET_NAME)
 CURRENT_PLAYBACK_ENDPOINT = "https://api.spotify.com/v1/me/player"
 
 

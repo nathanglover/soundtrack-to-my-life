@@ -7,7 +7,7 @@ import pytz
 import requests
 
 
-client = boto3.client("ssm")
+client = boto3.client("ssm", region_name="us-east-1")
 
 
 class SpotifyAPIAuth(requests.auth.AuthBase):
