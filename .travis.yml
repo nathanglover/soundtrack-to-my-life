@@ -9,7 +9,4 @@ before_script:
   - cd app
 script:
   - yarn install
-  - yarn test
-  - pwd
-  - ls
   - yarn coveralls
