@@ -31,6 +31,7 @@ def test_check_response_200(requests_mock, currently_playing_track_data):
 def test_check_response_401_try1(mocker, requests_mock):
     auth = SpotifyAPIAuth()
     mocker.patch.object(auth, "refresh_tokens")
+    mocker.patch.object(auth, "_set_tokens")
     url = currently_playing.CURRENT_PLAYBACK_ENDPOINT
     requests_mock.get(url, status_code=401)
     res1 = requests.get(url)
