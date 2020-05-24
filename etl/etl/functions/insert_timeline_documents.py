@@ -12,9 +12,13 @@ from etl.config import BUCKET_NAME, USER_ID, get_mongodb_client
 MAX_KEYS = 1000
 S3 = boto3.client("s3", region_name="us-east-1")
 
-collection = (
-    get_mongodb_client().get_database("soundtrackToMyLife").get_collection("timeline")
-)
+
+def get_collection():
+    return (
+        get_mongodb_client()
+        .get_database("soundtrackToMyLife")
+        .get_collection("timeline")
+    )
 
 
 class IsPlayingException(Exception):
@@ -198,6 +202,7 @@ def timeline_documents() -> Optional[Iterable[dict]]:
     """
     Returns a generator of all the timeline documents that need to be added or None.
     """
+    collection = get_collection()
     empty = collection.find_one() is None
     if empty:
         res = S3.list_objects_v2(Bucket=BUCKET_NAME, MaxKeys=MAX_KEYS)
@@ -213,6 +218,7 @@ def handler(event, context, save=True) -> None:
     """
     Save new files from s3 to the mongo db database.
     """
+    collection = get_collection()
     documents = list(timeline_documents())
     if save and documents:
         print("Saving new timeline documents.")

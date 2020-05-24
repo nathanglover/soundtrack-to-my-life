@@ -171,8 +171,11 @@ def test_timeline_documents_generator(mocker, currently_playing_track_data):
 
 
 def test_timeline_documents_empty(mocker):
+    collection_mock = mocker.MagicMock()
+    collection_mock.find_one.return_value = None
     mocker.patch(
-        "etl.functions.insert_timeline_documents.collection.find_one", return_value=None
+        "etl.functions.insert_timeline_documents.get_collection",
+        return_value=collection_mock,
     )
     mocker.patch("etl.functions.insert_timeline_documents.S3.list_objects_v2"),
     mocker.patch("etl.functions.insert_timeline_documents.process_s3_response")
@@ -188,9 +191,11 @@ def test_handler(mocker):
         "etl.functions.insert_timeline_documents.timeline_documents",
         return_value=[1, 2, 3],
     )
-    mocker.patch("etl.functions.insert_timeline_documents.collection")
+    collection_mock = mocker.MagicMock()
+    mocker.patch(
+        "etl.functions.insert_timeline_documents.get_collection",
+        return_value=collection_mock,
+    )
     handler(None, None, True)
     etl.functions.insert_timeline_documents.timeline_documents.assert_called_once()
-    etl.functions.insert_timeline_documents.collection.insert_many.assert_called_once_with(
-        [1, 2, 3], ordered=True
-    )
+    collection_mock.insert_many.assert_called_once_with([1, 2, 3], ordered=True)
