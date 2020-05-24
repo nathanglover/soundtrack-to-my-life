@@ -61,6 +61,7 @@ def test_log_data(currently_playing_track_data):
 
 def test_handler(mocker, requests_mock, currently_playing_track_data):
     url = currently_playing.CURRENT_PLAYBACK_ENDPOINT
+    mocker.patch("etl.functions.currently_playing.SpotifyAPIAuth")
     requests_mock.get(url, json=currently_playing_track_data)
     mocker.patch("etl.functions.currently_playing.save_to_s3")
     currently_playing.handler(None, None, True)

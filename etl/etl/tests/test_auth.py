@@ -53,10 +53,9 @@ def test_refresh_tokens(mocker, requests_mock):
     refresh_token = "yyyyy"
     auth.tokens = {"access_tokens": start_access_token, "refresh_token": refresh_token}
     requests_mock.post(url=auth.token_url, json={"access_token": end_access_token})
+    mocker.patch.object(auth, "_get_client_secret_auth")
     mocker.patch.object(auth, "_save_new_tokens")
-
     auth.refresh_tokens()
-
     auth._save_new_tokens.assert_called_once()
     assert auth.tokens["access_token"] == end_access_token
     assert auth.tokens["refresh_token"] == refresh_token
