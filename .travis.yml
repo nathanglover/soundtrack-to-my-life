@@ -5,9 +5,11 @@ cache:
   yarn: true
   directories:
     - node_modules
-before_script: 
+before_script:
   - cd app
 script:
   - yarn install
   - yarn test
+  - pwd
+  - ls
   - yarn coveralls
