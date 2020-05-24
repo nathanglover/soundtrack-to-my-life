@@ -4,7 +4,7 @@
 
 A timeline of what I have been listening using Spotify's Web API, AWS Lambda, Mongo DB, GraphQL, and React.
 <p align="center">
-  <img src="https://github.com/nathanglover/soundtrack-to-my-life/blob/master/images/screenshot.png?raw=true" alt="Image of App" width="500"/>
+  <img src="https://github.com/nathanglover/soundtrack-to-my-life/blob/master/images/screenshot.png?raw=true" alt="Image of App"/>
 </p>
 
 ## Why?
@@ -19,7 +19,7 @@ This project has 3 different pieces.
 ### ETL
 
 <p align="center">
-  <img src="https://github.com/nathanglover/soundtrack-to-my-life/blob/9-issue/images/serverless-screenshot.png?raw=true" alt="Image of Serverless" width="500"/>
+  <img src="https://github.com/nathanglover/soundtrack-to-my-life/blob/9-issue/images/serverless-screenshot.png?raw=true" alt="Image of Serverless"/>
 </p>
 
 #### Extract
@@ -39,7 +39,7 @@ Every 15 minutes an AWS Lambda function quries S3 for unprocessed records. These
 ### GraphQL API
 
 <p align="center">
-  <img src="https://github.com/nathanglover/soundtrack-to-my-life/blob/9-issue/images/graphql-screenshot.png?raw=true" alt="Image of Serverless" width="500"/>
+  <img src="https://github.com/nathanglover/soundtrack-to-my-life/blob/9-issue/images/graphql-screenshot.png?raw=true" alt="Image of Serverless"/>
 </p>
 
 
