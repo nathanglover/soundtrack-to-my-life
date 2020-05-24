@@ -2,9 +2,14 @@
 
 [![Build Status](https://travis-ci.org/nathanglover/soundtrack-to-my-life.svg?branch=master)](https://travis-ci.org/nathanglover/soundtrack-to-my-life) [![Coverage Status](https://coveralls.io/repos/github/nathanglover/soundtrack-to-my-life/badge.svg?branch=master)](https://coveralls.io/github/nathanglover/soundtrack-to-my-life?branch=master) 
 
-A timeline of what I have been listening using Spotify's Web API, AWS Lambda, Mongo DB, GraphQL, and React.
+A timeline of what I have been listening using Spotify's Web API, AWS Lambda, Mongo DB, GraphQL, and React. 
+
+[https://soundtrack2mylife.nathanglover.dev/](https://soundtrack2mylife.nathanglover.dev/)
+
 <p align="center">
-  <img src="https://github.com/nathanglover/soundtrack-to-my-life/blob/master/images/screenshot.png?raw=true" alt="Image of App" width="600"/>
+  <a href="https://soundtrack2mylife.nathanglover.dev/">
+    <img src="https://github.com/nathanglover/soundtrack-to-my-life/blob/master/images/screenshot.png?raw=true" alt="Image of App" width="600"/>
+  </a>
 </p>
 
 ## Why?
@@ -19,7 +24,7 @@ This project has 3 different pieces.
 ### ETL
 
 <p align="center">
-  <img src="https://github.com/nathanglover/soundtrack-to-my-life/blob/9-issue/images/serverless-screenshot.png?raw=true" alt="Image of Serverless" width="900"/>
+  <img src="https://github.com/nathanglover/soundtrack-to-my-life/blob/9-issue/images/serverless-screenshot.png?raw=true" alt="Image of Serverless" width="800"/>
 </p>
 
 #### Extract
@@ -39,7 +44,7 @@ Every 15 minutes an AWS Lambda function quries S3 for unprocessed records. These
 ### GraphQL API
 
 <p align="center">
-  <img src="https://github.com/nathanglover/soundtrack-to-my-life/blob/9-issue/images/graphql-screenshot.png?raw=true" alt="Image of Serverless" width="900"/>
+  <img src="https://github.com/nathanglover/soundtrack-to-my-life/blob/9-issue/images/graphql-screenshot.png?raw=true" alt="Image of Serverless" width="800"/>
 </p>
 
 
@@ -52,6 +57,21 @@ This was my first use of GraphQL and I still have a lot to learn. The API itself
 - Apollo Server
 - Netlify Functions
 
-
-
 ### React Frontend
+This is a simple frontend that is styled after Spotify's own UI. Each day is a separate page, with the root url being the current day. The next and back buttons allows navigation to different days. 
+
+The slider that is normally used to skip through a track is used to skip through the day to see what was playing to at any given time. If I was listening to nothing no album will display and the track information will display "Silence". 
+
+The page also allows for the song to be opened in the Spotify app by clicking the Spotify icon.
+
+#### Languages & Tools
+- Javascript
+- React
+- Apollo Client
+- React Router
+- React Testing Library 
+- Vibrant
+
+## Testing
+
+Tests for both the ETL process and the frontend are run using TravisCI and coverage is reported out in Coveralls. 
