@@ -1,12 +1,32 @@
-language: node_js
+language: python
+python:
+  - 3.8
 node_js:
   - node
 cache:
   yarn: true
   directories:
     - node_modules
-before_script:
+install:
   - cd app
-script:
   - yarn install
-  - yarn coveralls
+  - cd ../etl
+  - pip install -r requirement.txt
+  - cd ../
+
+stages:
+  - test
+
+jobs: 
+  - stage: test
+    name: "etl"
+    before_script:
+      - cd etl
+    script:
+      - python -m pytest --cov=.
+  - stage: test
+    name: "app"
+    before-script:
+      - cd app
+    script:
+      - yarn coveralls
