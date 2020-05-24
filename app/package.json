@@ -21,7 +21,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "react-scripts test --env=jest-environment-jsdom-sixteen --coverage && react-scripts build",
+    "deploy": "cross-env CI=true react-scripts test --env=jest-environment-jsdom-sixteen --coverage && react-scripts build",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen --coverage",
     "eject": "react-scripts eject",
     "postinstall": "netlify-lambda install functions",
@@ -56,10 +56,11 @@
   },
   "devDependencies": {
     "@apollo/react-testing": "^3.1.4",
-    "coveralls": "^3.1.0",
-    "jest-environment-jsdom-sixteen": "^1.0.3",
     "@testing-library/jest-dom": "^5.8.0",
     "@testing-library/react": "^10.0.4",
-    "@testing-library/user-event": "^10.3.5"
+    "@testing-library/user-event": "^10.3.5",
+    "coveralls": "^3.1.0",
+    "cross-env": "^7.0.2",
+    "jest-environment-jsdom-sixteen": "^1.0.3"
   }
 }
