@@ -35,6 +35,7 @@ def test_check_response_401_try1(mocker, requests_mock):
     url = currently_playing.CURRENT_PLAYBACK_ENDPOINT
     requests_mock.get(url, status_code=401)
     res1 = requests.get(url)
+    auth.tokens = {"access_token": "xxx", "refresh_token": "yyy"}
     requests_mock.get(url, status_code=200)
     res2 = currently_playing.check_response(res1, auth)
     auth.refresh_tokens.assert_called_once()
