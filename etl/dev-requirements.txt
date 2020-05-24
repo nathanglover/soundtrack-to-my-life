@@ -1,4 +1,5 @@
 black
+coveralls
 coverage
 pylint
 pytest-cov
