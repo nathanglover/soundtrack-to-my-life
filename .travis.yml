@@ -1,32 +1,20 @@
-language: python
-python:
-  - 3.8
-node_js:
-  - node
 cache:
+  pip: true
   yarn: true
   directories:
     - node_modules
-install:
-  - cd app
-  - yarn install
-  - cd ../etl
-  - pip install -r requirement.txt
-  - cd ../
-
-stages:
-  - test
-
 jobs: 
-  - stage: test
-    name: "etl"
+  include:
+    - name: "app" 
+    language: node_js
+    node_js:
+      - node
+    before_install:
+      - nvm install 12
+      - cd app
+    install:
+      - yarn install
     before_script:
-      - cd etl
-    script:
-      - python -m pytest --cov=.
-  - stage: test
-    name: "app"
-    before-script:
       - cd app
     script:
       - yarn coveralls
