@@ -34,7 +34,6 @@ const getTimestamp = (time, date) => time + date.getTime();
 
 const toTimeString = (time) => {
   const options = {
-    timeStyle: "short",
     timeZone: "UTC",
     hour: "numeric",
     minute: "numeric",
